@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="VOLA — El nuevo estándar en aviación privada y helicópteros en Paraguay.">
+  <title>VOLA | Aviación Privada & Helicópteros</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header class="nav" id="nav" data-i18n-aria="nav.main">
+    <div class="nav__inner container">
+      <a href="#" class="nav__logo" data-i18n-aria="nav.home">VOLA</a>
+
+      <nav class="nav__links" aria-label="Section links">
+        <a href="#flota" class="nav__link" data-i18n="nav.fleet">Flota</a>
+        <a href="#experiencia" class="nav__link" data-i18n="nav.experience">Experiencia</a>
+        <a href="#servicios" class="nav__link" data-i18n="nav.services">Servicios</a>
+      </nav>
+
+      <div class="nav__actions">
+        <div class="lang-switch" data-lang-switch role="group" data-i18n-aria="lang.label">
+          <button type="button" class="lang-switch__btn" data-lang="es" aria-pressed="true">ES</button>
+          <button type="button" class="lang-switch__btn" data-lang="en" aria-pressed="false">EN</button>
+          <button type="button" class="lang-switch__btn" data-lang="de" aria-pressed="false">DE</button>
+          <button type="button" class="lang-switch__btn" data-lang="pt" aria-pressed="false">PT</button>
+        </div>
+
+        <a href="#contacto" class="btn btn--outline btn--sm nav__cta magnetic" data-magnetic data-i18n="nav.concierge">
+          Contactar Concierge
+        </a>
+      </div>
+
+      <button class="nav__toggle" id="navToggle" data-i18n-aria="nav.openMenu" aria-expanded="false">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div class="nav__mobile" id="navMobile" aria-hidden="true">
+    <div class="lang-switch lang-switch--mobile" data-lang-switch role="group" data-i18n-aria="lang.label">
+      <button type="button" class="lang-switch__btn" data-lang="es" aria-pressed="true">ES</button>
+      <button type="button" class="lang-switch__btn" data-lang="en" aria-pressed="false">EN</button>
+      <button type="button" class="lang-switch__btn" data-lang="de" aria-pressed="false">DE</button>
+      <button type="button" class="lang-switch__btn" data-lang="pt" aria-pressed="false">PT</button>
+    </div>
+    <a href="#flota" class="nav__mobile-link" data-i18n="nav.fleet">Flota</a>
+    <a href="#experiencia" class="nav__mobile-link" data-i18n="nav.experience">Experiencia</a>
+    <a href="#servicios" class="nav__mobile-link" data-i18n="nav.services">Servicios</a>
+    <a href="#contacto" class="btn btn--outline" data-i18n="nav.concierge">Contactar Concierge</a>
+  </div>
+
+  <main>
+
+    <!-- Hero -->
+    <section class="hero" id="inicio" aria-labelledby="heroTitle">
+      <div class="hero__bg" aria-hidden="true">
+        <div class="hero__photo"></div>
+        <div class="hero__gradient"></div>
+        <div class="hero__grid"></div>
+      </div>
+
+      <div class="hero__content container">
+        <p class="hero__eyebrow" data-i18n="hero.eyebrow">Aviación privada · Paraguay</p>
+        <h1 class="hero__title" id="heroTitle" data-i18n-html="hero.title">
+          El nuevo estándar<br>en aviación privada
+        </h1>
+        <p class="hero__subtitle" data-i18n="hero.subtitle">
+          Jets ejecutivos y helicópteros de élite, disponibles bajo demanda.
+          Su tiempo es el activo más valioso — nosotros lo protegemos.
+        </p>
+
+        <!-- Flight Quoter -->
+        <form class="quoter" id="quoterForm" novalidate data-i18n-aria="quoter.label">
+          <div class="quoter__fields">
+            <div class="quoter__field">
+              <label for="origin" class="quoter__label" data-i18n="quoter.origin">Origen</label>
+              <input
+                type="text"
+                id="origin"
+                name="origin"
+                class="quoter__input"
+                data-i18n-placeholder="quoter.originPlaceholder"
+                placeholder="Ej. Asunción (ASU)"
+                autocomplete="off"
+                required
+              >
+            </div>
+
+            <div class="quoter__divider" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M4 10h12M12 6l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+
+            <div class="quoter__field">
+              <label for="destination" class="quoter__label" data-i18n="quoter.destination">Destino</label>
+              <input
+                type="text"
+                id="destination"
+                name="destination"
+                class="quoter__input"
+                data-i18n-placeholder="quoter.destinationPlaceholder"
+                placeholder="Ej. Ciudad del Este (AGT)"
+                autocomplete="off"
+                required
+              >
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn--gold quoter__submit magnetic" data-magnetic>
+            <span data-i18n="quoter.submit">Cotizar Vuelo</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </form>
+      </div>
+
+      <div class="hero__stats container" data-i18n-aria="stats.label">
+        <div class="hero__stat">
+          <span class="hero__stat-value">24/7</span>
+          <span class="hero__stat-label" data-i18n="stats.concierge">Concierge dedicado</span>
+        </div>
+        <div class="hero__stat">
+          <span class="hero__stat-value">15+</span>
+          <span class="hero__stat-label" data-i18n="stats.aircraft">Aeronaves disponibles</span>
+        </div>
+        <div class="hero__stat">
+          <span class="hero__stat-value">&lt;2h</span>
+          <span class="hero__stat-label" data-i18n="stats.response">Tiempo de respuesta</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Fleet Catalog — Bento Grid -->
+    <section class="fleet section" id="flota" aria-labelledby="fleetTitle">
+      <div class="container">
+        <header class="section__header">
+          <p class="section__eyebrow" data-i18n="fleet.eyebrow">Nuestra flota</p>
+          <h2 class="section__title" id="fleetTitle" data-i18n-html="fleet.title">Aeronaves de élite,<br>a su disposición</h2>
+          <p class="section__desc" data-i18n="fleet.desc">
+            Cada aeronave cumple los más exigentes estándares de seguridad,
+            confort y rendimiento operacional.
+          </p>
+        </header>
+
+        <div class="bento">
+
+          <article class="bento__card bento__card--featured fleet-card" data-reveal>
+            <div class="fleet-card__badge" data-i18n="fleet.flagship">Flagship</div>
+            <div class="fleet-card__visual fleet-card__visual--jet" aria-hidden="true"></div>
+            <div class="fleet-card__body">
+              <span class="fleet-card__category" data-i18n="fleet.categoryJet">Jet Ejecutivo</span>
+              <h3 class="fleet-card__name">Gulfstream G650</h3>
+              <p class="fleet-card__desc" data-i18n="fleet.g650.desc">
+                El pináculo del lujo aéreo. Cabina silenciosa, alcance intercontinental
+                y servicio de clase mundial a bordo.
+              </p>
+              <dl class="fleet-card__specs">
+                <div class="fleet-card__spec">
+                  <dt data-i18n="fleet.specRange">Autonomía</dt>
+                  <dd>12,964 km</dd>
+                </div>
+                <div class="fleet-card__spec">
+                  <dt data-i18n="fleet.specPassengers">Pasajeros</dt>
+                  <dd><span data-i18n="fleet.upTo">Hasta</span> 19</dd>
+                </div>
+                <div class="fleet-card__spec">
+                  <dt data-i18n="fleet.specSpeed">Velocidad</dt>
+                  <dd>956 km/h</dd>
+                </div>
+              </dl>
+              <a href="#contacto" class="fleet-card__link magnetic" data-magnetic>
+                <span data-i18n="fleet.g650.availability">Solicitar disponibilidad</span>
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                  <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            </div>
+          </article>
+
+          <article class="bento__card fleet-card" data-reveal>
+            <div class="fleet-card__visual fleet-card__visual--light" aria-hidden="true"></div>
+            <div class="fleet-card__body">
+              <span class="fleet-card__category" data-i18n="fleet.categoryJet">Jet Ejecutivo</span>
+              <h3 class="fleet-card__name">Citation XLS+</h3>
+              <dl class="fleet-card__specs">
+                <div class="fleet-card__spec">
+                  <dt data-i18n="fleet.specRange">Autonomía</dt>
+                  <dd>3,441 km</dd>
+                </div>
+                <div class="fleet-card__spec">
+                  <dt data-i18n="fleet.specPassengers">Pasajeros</dt>
+                  <dd><span data-i18n="fleet.upTo">Hasta</span> 9</dd>
+                </div>
+              </dl>
+            </div>
+          </article>
+
+          <article class="bento__card fleet-card" data-reveal>
+            <div class="fleet-card__visual fleet-card__visual--heli" aria-hidden="true"></div>
+            <div class="fleet-card__body">
+              <span class="fleet-card__category" data-i18n="fleet.categoryHeli">Helicóptero</span>
+              <h3 class="fleet-card__name">Airbus H145</h3>
+              <dl class="fleet-card__specs">
+                <div class="fleet-card__spec">
+                  <dt data-i18n="fleet.specRange">Autonomía</dt>
+                  <dd>680 km</dd>
+                </div>
+                <div class="fleet-card__spec">
+                  <dt data-i18n="fleet.specPassengers">Pasajeros</dt>
+                  <dd><span data-i18n="fleet.upTo">Hasta</span> 8</dd>
+                </div>
+              </dl>
+            </div>
+          </article>
+
+          <article class="bento__card bento__card--wide fleet-card" data-reveal>
+            <div class="fleet-card__visual fleet-card__visual--heli2" aria-hidden="true"></div>
+            <div class="fleet-card__body">
+              <span class="fleet-card__category" data-i18n="fleet.categoryHeliVip">Helicóptero VIP</span>
+              <h3 class="fleet-card__name">Bell 429 GlobalRanger</h3>
+              <p class="fleet-card__desc" data-i18n="fleet.bell429.desc">
+                Acceso directo a destinos exclusivos. Ideal para traslados urbanos,
+                eventos corporativos y experiencias panorámicas.
+              </p>
+              <dl class="fleet-card__specs">
+                <div class="fleet-card__spec">
+                  <dt data-i18n="fleet.specRange">Autonomía</dt>
+                  <dd>741 km</dd>
+                </div>
+                <div class="fleet-card__spec">
+                  <dt data-i18n="fleet.specPassengers">Pasajeros</dt>
+                  <dd><span data-i18n="fleet.upTo">Hasta</span> 7</dd>
+                </div>
+                <div class="fleet-card__spec">
+                  <dt data-i18n="fleet.specSpeed">Velocidad</dt>
+                  <dd>278 km/h</dd>
+                </div>
+              </dl>
+            </div>
+          </article>
+
+          <article class="bento__card fleet-card" data-reveal>
+            <div class="fleet-card__visual fleet-card__visual--mid" aria-hidden="true"></div>
+            <div class="fleet-card__body">
+              <span class="fleet-card__category" data-i18n="fleet.categoryJet">Jet Ejecutivo</span>
+              <h3 class="fleet-card__name">Phenom 300E</h3>
+              <dl class="fleet-card__specs">
+                <div class="fleet-card__spec">
+                  <dt data-i18n="fleet.specRange">Autonomía</dt>
+                  <dd>3,650 km</dd>
+                </div>
+                <div class="fleet-card__spec">
+                  <dt data-i18n="fleet.specPassengers">Pasajeros</dt>
+                  <dd><span data-i18n="fleet.upTo">Hasta</span> 8</dd>
+                </div>
+              </dl>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience -->
+    <section class="experience section" id="experiencia" aria-labelledby="experienceTitle">
+      <div class="container">
+        <div class="experience__grid">
+          <div class="experience__content" data-reveal>
+            <p class="section__eyebrow" data-i18n="experience.eyebrow">La experiencia VOLA</p>
+            <h2 class="section__title" id="experienceTitle" data-i18n-html="experience.title">
+              Más que un vuelo.<br>Una declaración.
+            </h2>
+            <p class="section__desc" data-i18n="experience.desc">
+              Desde la primera consulta hasta el aterrizaje, cada detalle está
+              curado por nuestro equipo de concierge especializado en aviación
+              corporativa de alto nivel.
+            </p>
+            <ul class="experience__list">
+              <li class="experience__item">
+                <span class="experience__icon" aria-hidden="true">01</span>
+                <div>
+                  <strong data-i18n="experience.item1Title">Itinerarios a medida</strong>
+                  <p data-i18n="experience.item1Desc">Rutas optimizadas según su agenda, sin conexiones ni esperas.</p>
+                </div>
+              </li>
+              <li class="experience__item">
+                <span class="experience__icon" aria-hidden="true">02</span>
+                <div>
+                  <strong data-i18n="experience.item2Title">Confidencialidad absoluta</strong>
+                  <p data-i18n="experience.item2Desc">Discreción operacional garantizada en cada etapa del viaje.</p>
+                </div>
+              </li>
+              <li class="experience__item">
+                <span class="experience__icon" aria-hidden="true">03</span>
+                <div>
+                  <strong data-i18n="experience.item3Title">Servicio white-glove</strong>
+                  <p data-i18n="experience.item3Desc">Catering premium, transporte terrestre y asistencia 24/7.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="experience__visual" data-reveal aria-hidden="true">
+            <div class="experience__frame">
+              <div class="experience__frame-inner"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section class="services section" id="servicios" aria-labelledby="servicesTitle">
+      <div class="container">
+        <header class="section__header section__header--center">
+          <p class="section__eyebrow" data-i18n="services.eyebrow">Servicios</p>
+          <h2 class="section__title" id="servicesTitle" data-i18n="services.title">Soluciones integrales</h2>
+        </header>
+
+        <div class="services__grid">
+          <article class="service-card" data-reveal>
+            <div class="service-card__icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z" stroke="currentColor" stroke-width="1.5"/>
+              </svg>
+            </div>
+            <h3 class="service-card__title" data-i18n="services.charterTitle">Charter Ejecutivo</h3>
+            <p class="service-card__desc" data-i18n="services.charterDesc">Vuelos privados punto a punto con máxima flexibilidad operacional.</p>
+          </article>
+
+          <article class="service-card" data-reveal>
+            <div class="service-card__icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M12 7v5l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h3 class="service-card__title" data-i18n="services.heliTitle">Helicópteros VIP</h3>
+            <p class="service-card__desc" data-i18n="services.heliDesc">Traslados urbanos, eventos y acceso a destinos de difícil acceso.</p>
+          </article>
+
+          <article class="service-card" data-reveal>
+            <div class="service-card__icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3 class="service-card__title" data-i18n="services.membershipTitle">Membresía Corporativa</h3>
+            <p class="service-card__desc" data-i18n="services.membershipDesc">Programas exclusivos para empresas con necesidades recurrentes de vuelo.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA / Contact -->
+    <section class="cta section" id="contacto" aria-labelledby="ctaTitle">
+      <div class="container">
+        <div class="cta__inner" data-reveal>
+          <p class="section__eyebrow" data-i18n="cta.eyebrow">Concierge</p>
+          <h2 class="cta__title" id="ctaTitle" data-i18n-html="cta.title">¿Listo para elevar<br>su próximo viaje?</h2>
+          <p class="cta__desc" data-i18n="cta.desc">
+            Nuestro equipo está disponible las 24 horas para diseñar
+            la experiencia de vuelo perfecta.
+          </p>
+          <div class="cta__actions">
+            <a href="#" class="btn btn--gold magnetic" id="conciergeBtn" data-magnetic data-i18n="cta.button">
+              Contactar Concierge
+            </a>
+            <a href="tel:+595981234567" class="btn btn--ghost">
+              +595 981 234 567
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer" data-i18n-aria="footer.label">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <span class="footer__logo">VOLA</span>
+        <p class="footer__tagline">vola.com.py</p>
+      </div>
+      <nav class="footer__nav" data-i18n-aria="footer.navLabel">
+        <a href="#flota" data-i18n="nav.fleet">Flota</a>
+        <a href="#experiencia" data-i18n="nav.experience">Experiencia</a>
+        <a href="#servicios" data-i18n="nav.services">Servicios</a>
+        <a href="#contacto" data-i18n="nav.contact">Contacto</a>
+      </nav>
+      <p class="footer__copy" data-i18n="footer.rights">&copy; 2026 VOLA. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="i18n/translations.js"></script>
+  <script src="i18n/i18n.js"></script>
+  <script src="app.js" defer></script>
+</body>
+</html>
