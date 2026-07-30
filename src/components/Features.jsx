@@ -22,18 +22,20 @@ const FEATURES = [
 
 export default function Features() {
   return (
-    <section id="servicios" className="py-20 md:py-32">
+    <section id="servicios" className="py-20 md:py-32 bg-cloud-100">
       <div className="max-w-container mx-auto px-5 sm:px-8">
         <Reveal className="max-w-2xl mb-14 md:mb-20">
-          <p className="text-xs font-medium uppercase tracking-[0.16em] text-gold-400 mb-4">
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-gray-400 mb-4">
             La experiencia VOLA
           </p>
-          <h2 className="font-display font-bold leading-[1.08] tracking-tight text-white mb-5"
-              style={{ fontSize: 'clamp(2rem, 4.5vw, 3rem)' }}>
+          <h2
+            className="font-display font-bold leading-[1.08] tracking-tight text-ink-900 mb-5"
+            style={{ fontSize: 'clamp(2rem, 4.5vw, 3rem)' }}
+          >
             Más que un vuelo.<br />
-            <span className="gold-text">Una declaración.</span>
+            <span className="text-gray-400">Una declaración.</span>
           </h2>
-          <p className="text-gray-400 text-base md:text-lg leading-relaxed">
+          <p className="text-gray-500 text-base md:text-lg leading-relaxed">
             Cada detalle está curado por nuestro equipo de concierge especializado en
             aviación corporativa de alto nivel.
           </p>
@@ -44,7 +46,7 @@ export default function Features() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: '0px 0px -40px 0px' }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-4"
+          className="grid grid-cols-1 md:grid-cols-3 gap-5"
         >
           {FEATURES.map((f) => {
             const Icon = f.icon;
@@ -52,13 +54,13 @@ export default function Features() {
               <motion.div
                 key={f.title}
                 variants={fadeUp}
-                className="card-surface card-surface-hover rounded-2xl p-7 md:p-8"
+                className="card-clean card-clean-hover p-7 md:p-8"
               >
-                <div className="w-12 h-12 flex items-center justify-center rounded-lg bg-gold-400/10 text-gold-400 mb-5">
+                <div className="w-12 h-12 flex items-center justify-center rounded-xl bg-ink-900 text-white mb-5">
                   <Icon size={22} strokeWidth={1.5} />
                 </div>
-                <h3 className="font-display font-bold text-lg text-white mb-3">{f.title}</h3>
-                <p className="text-sm text-gray-400 leading-relaxed">{f.desc}</p>
+                <h3 className="font-display font-bold text-lg text-ink-900 mb-3">{f.title}</h3>
+                <p className="text-sm text-gray-500 leading-relaxed">{f.desc}</p>
               </motion.div>
             );
           })}

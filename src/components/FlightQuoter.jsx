@@ -1,150 +1,129 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Loader as Loader2, Check, Plane, Calendar, Users, MapPin } from 'lucide-react';
-import { ORIGIN_OPTIONS, buildWhatsAppUrl, formatQuoteMessage } from '../data';
+import { ORIGIN, DESTINATIONS, buildWhatsAppUrl, formatQuoteMessage } from '../data';
 
 const PASSENGERS = Array.from({ length: 12 }, (_, i) => i + 1);
 
+const selectArrow =
+  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E\")";
+
 export default function FlightQuoter() {
-  const [origin, setOrigin] = useState(ORIGIN_OPTIONS[0]);
-  const [destination, setDestination] = useState('');
+  const [destination, setDestination] = useState(DESTINATIONS[0]);
   const [date, setDate] = useState('');
   const [passengers, setPassengers] = useState(1);
   const [loading, setLoading] = useState(false);
   const [price, setPrice] = useState(null);
-  const [error, setError] = useState('');
 
   const calculate = (e) => {
     e.preventDefault();
-    if (!destination.trim()) {
-      setError('destination');
-      return;
-    }
-    setError('');
     setLoading(true);
     setPrice(null);
     setTimeout(() => {
-      const amount = Math.floor(Math.random() * 14501) + 3500;
+      const amount = Math.floor(Math.random() * 3601) + 1200;
       setPrice(amount);
       setLoading(false);
     }, 1500);
   };
 
   const confirmWhatsApp = () => {
-    const msg = formatQuoteMessage({ origin, destination, date, passengers, price });
+    const msg = formatQuoteMessage({ origin: ORIGIN, destination, date, passengers, price });
     window.open(buildWhatsAppUrl(msg), '_blank', 'noopener,noreferrer');
   };
 
   const reset = () => {
     setPrice(null);
-    setDestination('');
     setDate('');
     setPassengers(1);
   };
 
+  const labelBase = 'block text-[0.625rem] font-semibold uppercase tracking-[0.1em] text-gray-400 mb-1.5';
   const fieldBase =
-    'w-full bg-transparent text-sm text-white placeholder-gray-600 outline-none';
-  const labelBase =
-    'block text-[0.625rem] font-medium uppercase tracking-[0.1em] text-gray-500 mb-1.5';
+    'w-full bg-transparent text-sm text-ink-900 placeholder-gray-400 outline-none';
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.7, delay: 0.4, ease: [0.4, 0, 0.2, 1] }}
+      transition={{ duration: 0.65, delay: 0.35, ease: [0.4, 0, 0.2, 1] }}
       className="w-full max-w-2xl"
     >
-      <div className="card-surface rounded-2xl p-1.5 backdrop-blur-md bg-ink-800/85 shadow-[0_24px_64px_rgba(0,0,0,0.5)]">
+      <div className="card-clean p-1.5 shadow-lift">
         <form onSubmit={calculate} className="flex flex-col">
-          {/* Row 1: Origin / Destination */}
+          {/* Row 1: Origin (fixed) / Destination */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-px">
             <div className="p-3.5">
               <label htmlFor="origin" className={labelBase}>
                 Origen
               </label>
               <div className="relative flex items-center">
-                <MapPin size={14} className="absolute left-0 text-gray-600 pointer-events-none" />
-                <select
+                <MapPin size={14} className="absolute left-0 text-gray-400 pointer-events-none" />
+                <input
                   id="origin"
-                  value={origin}
-                  onChange={(e) => setOrigin(e.target.value)}
+                  type="text"
+                  value={ORIGIN}
+                  readOnly
+                  className={`${fieldBase} pl-5 cursor-default text-gray-500`}
+                />
+              </div>
+            </div>
+
+            <div className="p-3.5 sm:border-l border-gray-200/70">
+              <label htmlFor="destination" className={labelBase}>
+                Destino
+              </label>
+              <div className="relative flex items-center">
+                <MapPin size={14} className="absolute left-0 text-gray-400 pointer-events-none" />
+                <select
+                  id="destination"
+                  value={destination}
+                  onChange={(e) => setDestination(e.target.value)}
                   className={`${fieldBase} pl-5 appearance-none cursor-pointer pr-6 bg-no-repeat`}
-                  style={{
-                    backgroundImage:
-                      "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E\")",
-                    backgroundPosition: 'right 0 center',
-                  }}
+                  style={{ backgroundImage: selectArrow, backgroundPosition: 'right 0 center' }}
                 >
-                  {ORIGIN_OPTIONS.map((o) => (
-                    <option key={o} value={o} className="bg-ink-800 text-white">
-                      {o}
+                  {DESTINATIONS.map((d) => (
+                    <option key={d} value={d}>
+                      {d}
                     </option>
                   ))}
                 </select>
               </div>
             </div>
-
-            <div className="p-3.5 sm:border-l border-white/[0.07]">
-              <label htmlFor="destination" className={labelBase}>
-                Destino
-              </label>
-              <div className="relative flex items-center">
-                <MapPin size={14} className="absolute left-0 text-gray-600 pointer-events-none" />
-                <input
-                  id="destination"
-                  type="text"
-                  value={destination}
-                  onChange={(e) => {
-                    setDestination(e.target.value);
-                    if (error === 'destination') setError('');
-                  }}
-                  placeholder="Ej. Punta del Este"
-                  autoComplete="off"
-                  className={`${fieldBase} pl-5 ${
-                    error === 'destination' ? 'text-red-400' : ''
-                  }`}
-                />
-              </div>
-            </div>
           </div>
 
           {/* Row 2: Date / Passengers */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-px border-t border-white/[0.07]">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-px border-t border-gray-200/70">
             <div className="p-3.5">
               <label htmlFor="date" className={labelBase}>
                 Fecha
               </label>
               <div className="relative flex items-center">
-                <Calendar size={14} className="absolute left-0 text-gray-600 pointer-events-none" />
+                <Calendar size={14} className="absolute left-0 text-gray-400 pointer-events-none" />
                 <input
                   id="date"
                   type="date"
                   value={date}
                   onChange={(e) => setDate(e.target.value)}
-                  className={`${fieldBase} pl-5 [color-scheme:dark]`}
+                  className={`${fieldBase} pl-5`}
                 />
               </div>
             </div>
 
-            <div className="p-3.5 sm:border-l border-white/[0.07]">
+            <div className="p-3.5 sm:border-l border-gray-200/70">
               <label htmlFor="passengers" className={labelBase}>
                 Pasajeros
               </label>
               <div className="relative flex items-center">
-                <Users size={14} className="absolute left-0 text-gray-600 pointer-events-none" />
+                <Users size={14} className="absolute left-0 text-gray-400 pointer-events-none" />
                 <select
                   id="passengers"
                   value={passengers}
                   onChange={(e) => setPassengers(Number(e.target.value))}
-                  className={`${fieldBase} pl-5 appearance-none cursor-pointer pr-6`}
-                  style={{
-                    backgroundImage:
-                      "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E\")",
-                    backgroundPosition: 'right 0 center',
-                  }}
+                  className={`${fieldBase} pl-5 appearance-none cursor-pointer pr-6 bg-no-repeat`}
+                  style={{ backgroundImage: selectArrow, backgroundPosition: 'right 0 center' }}
                 >
                   {PASSENGERS.map((n) => (
-                    <option key={n} value={n} className="bg-ink-800 text-white">
+                    <option key={n} value={n}>
                       {n} {n === 1 ? 'pasajero' : 'pasajeros'}
                     </option>
                   ))}
@@ -162,9 +141,9 @@ export default function FlightQuoter() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  className="flex items-center justify-center gap-3 py-3.5 rounded-xl bg-ink-700 text-sm text-gray-300"
+                  className="flex items-center justify-center gap-3 py-3.5 rounded-xl bg-cloud-100 text-sm text-gray-500"
                 >
-                  <Loader2 size={18} className="animate-spin text-gold-400" />
+                  <Loader2 size={18} className="animate-spin text-ink-900" />
                   Calculando ruta óptima...
                 </motion.div>
               ) : price !== null ? (
@@ -175,18 +154,18 @@ export default function FlightQuoter() {
                   exit={{ opacity: 0 }}
                   className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3"
                 >
-                  <div className="flex-1 px-4 py-3 rounded-xl bg-ink-700 border border-gold-400/20">
-                    <p className="text-[0.625rem] uppercase tracking-[0.1em] text-gray-500 mb-0.5">
+                  <div className="flex-1 px-4 py-3 rounded-xl bg-cloud-100 border border-gray-200/70">
+                    <p className="text-[0.625rem] uppercase tracking-[0.1em] text-gray-400 mb-0.5">
                       Tarifa Estimada
                     </p>
-                    <p className="font-display text-2xl font-bold gold-text">
+                    <p className="font-display text-2xl font-bold text-ink-900">
                       ${price.toLocaleString('en-US')} USD
                     </p>
                   </div>
                   <button
                     type="button"
                     onClick={confirmWhatsApp}
-                    className="flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-sm font-semibold text-ink-950 bg-gradient-to-br from-gold-200 to-gold-600 hover:from-gold-100 hover:to-gold-500 transition-all duration-300 shadow-[0_8px_32px_rgba(201,169,98,0.25)]"
+                    className="btn-primary shadow-lift"
                   >
                     <Check size={16} />
                     Confirmar vía WhatsApp
@@ -194,7 +173,7 @@ export default function FlightQuoter() {
                   <button
                     type="button"
                     onClick={reset}
-                    className="px-4 py-3.5 rounded-xl text-sm text-gray-500 hover:text-white transition-colors"
+                    className="px-4 py-3.5 rounded-xl text-sm text-gray-400 hover:text-ink-900 transition-colors"
                   >
                     Nueva cotización
                   </button>
@@ -204,7 +183,7 @@ export default function FlightQuoter() {
                   key="calc"
                   type="submit"
                   whileTap={{ scale: 0.98 }}
-                  className="group flex items-center justify-center gap-2 w-full py-3.5 rounded-xl text-sm font-semibold text-ink-950 bg-gradient-to-br from-gold-200 to-gold-600 hover:from-gold-100 hover:to-gold-500 transition-all duration-300 shadow-[0_8px_32px_rgba(201,169,98,0.18)]"
+                  className="group btn-primary w-full"
                 >
                   <Plane size={16} className="group-hover:-translate-y-0.5 transition-transform" />
                   Calcular Vuelo
@@ -212,9 +191,6 @@ export default function FlightQuoter() {
                 </motion.button>
               )}
             </AnimatePresence>
-            {error === 'destination' && (
-              <p className="mt-2 text-xs text-red-400/90">Indique un destino para calcular la ruta.</p>
-            )}
           </div>
         </form>
       </div>
