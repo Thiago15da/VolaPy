@@ -41,7 +41,9 @@ export default function Hero() {
         </div>
 
         {/* Panel: título, prueba social y cotizador encajado */}
-        <div className="relative flex items-center bg-slate-950/80 backdrop-blur-md">
+        {/* Navy sólido, no translúcido: con opacidad el panel dependía de lo
+            que hubiera detrás y el titular blanco podía quedar ilegible. */}
+        <div className="relative flex items-center bg-ink-950">
           <div className="w-full px-5 py-12 sm:px-8 md:py-16 lg:px-12 xl:px-16">
             <motion.div variants={stagger} initial="hidden" animate="show" className="mx-auto max-w-xl">
               <motion.h1

@@ -28,7 +28,7 @@ const BADGES = [
     icon: Award,
     title: 'Capitán +1000hs',
     desc: 'Para pilotos al mando que acreditan más de mil horas de vuelo registradas en bitácora.',
-    tone: 'gold',
+    tone: 'red',
   },
   {
     icon: Mountain,
@@ -40,7 +40,7 @@ const BADGES = [
 
 const TONES = {
   green: 'bg-signal-green/10 text-signal-green',
-  gold: 'bg-gold-400/15 text-gold-600',
+  red: 'bg-brand-red/10 text-brand-red',
   slate: 'bg-slate-500/10 text-slate-500',
 };
 
@@ -70,7 +70,7 @@ function DashboardMock() {
         </span>
       </div>
 
-      <div className="grid gap-px bg-white/8 sm:grid-cols-[1.25fr_1fr]">
+      <div className="grid gap-px bg-white/10 sm:grid-cols-[1.25fr_1fr]">
         {/* Asignación de vuelos */}
         <div className="bg-ink-950 p-5">
           <p className="mb-4 flex items-center gap-2 text-[0.625rem] uppercase tracking-[0.12em] text-white/35">
@@ -79,14 +79,14 @@ function DashboardMock() {
           </p>
           <ul className="space-y-2">
             {FEED.map((f) => (
-              <li key={f.code} className="rounded-xl border border-white/8 bg-white/[0.03] p-3">
+              <li key={f.code} className="rounded-xl border border-white/10 bg-white/[0.03] p-3">
                 <div className="flex items-center justify-between gap-3">
                   <span className="font-display text-sm font-bold text-white">{f.route}</span>
                   <span className="shrink-0 text-[0.625rem] text-white/40">{f.code}</span>
                 </div>
                 <div className="mt-1.5 flex items-center justify-between gap-3">
                   <span className="text-xs text-white/45">{f.when}</span>
-                  <span className="rounded-full bg-white/8 px-2 py-0.5 text-[0.625rem] text-white/60">
+                  <span className="rounded-full bg-white/10 px-2 py-0.5 text-[0.625rem] text-white/60">
                     {f.seats}
                   </span>
                 </div>
@@ -104,7 +104,7 @@ function DashboardMock() {
           <ul className="space-y-3">
             {CHAT.map((c, i) => (
               <li key={i} className="flex gap-2.5">
-                <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white/8 text-[0.625rem] font-bold text-white/60">
+                <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white/10 text-[0.625rem] font-bold text-white/60">
                   {c.who.split(' ').pop()[0]}
                 </span>
                 <span className="min-w-0">
@@ -242,7 +242,7 @@ export default function ComunidadPilotos() {
           <Reveal delay={0.08}>
             <div className="card-clean p-7 shadow-card md:p-9">
               {sent ? (
-                <div className="rounded-xl border border-signal-green/25 bg-signal-green/8 p-6">
+                <div className="rounded-xl border border-signal-green/25 bg-signal-green/10 p-6">
                   <p className="flex items-center gap-2 font-semibold text-signal-green">
                     <Check size={18} />
                     {t('community.sent')}

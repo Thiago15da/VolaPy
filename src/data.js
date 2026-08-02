@@ -4,6 +4,19 @@ import { haversineKm } from './geo';
 
 export const WHATSAPP_NUMBER = '595985606780';
 
+/**
+ * Isotipo de marca (las dos alas con la bandera).
+ *
+ * Pendiente: el diseñador debe entregar el vectorial. Cuando esté, dejarlo
+ * en `public/` y apuntar acá — por ejemplo '/logo-vola.svg'. El componente
+ * Logo lo muestra automáticamente junto al wordmark en navbar y footer.
+ *
+ * Se mantiene en null a propósito: reconstruir el isotipo a mano desde los
+ * mockups en JPEG daría una versión parecida pero distinta de la identidad
+ * real, y eso es peor que mostrar sólo el logotipo tipográfico.
+ */
+export const BRAND_MARK_SRC = null;
+
 // Fondo del Hero. Idealmente: cabina interior de jet ejecutivo (cuero claro,
 // ventanas ovales). Se muestra a opacidad completa con overlay oscuro encima.
 export const HERO_IMAGE =
@@ -207,20 +220,20 @@ export const NAV_DIRECT = [
 ];
 
 /* ------------------------------------------------------------------ *
- * DATOS DE DEMOSTRACIÓN
+ * PRUEBA SOCIAL DE TERCEROS (desactivada)
  *
- * ⚠️  ATENCIÓN — NO PUBLICAR TAL CUAL.
- * VOLA no tiene (todavía) un perfil verificado en Trustpilot. Mostrar
- * esta calificación en producción sería exhibir reseñas inventadas bajo
- * una marca de terceros frente a clientes reales.
+ * `enabled: false` porque VOLA no tiene todavía un perfil verificado en
+ * Trustpilot: publicar esa calificación sería exhibir reseñas inventadas
+ * bajo una marca ajena frente a clientes reales. Con esto apagado,
+ * TrustBadge cae a los indicadores propios de TRUST_POINTS.
  *
- * Antes de salir a producción: reemplazar por la calificación real y su
- * enlace al perfil, o eliminar el bloque y usar <TrustBadge variant="own" />,
- * que muestra indicadores propios y verificables.
+ * Para reactivarlo hace falta un perfil real: cargar el puntaje verdadero,
+ * la cantidad de reseñas y `profileUrl` apuntando al perfil público, y
+ * recién ahí poner `enabled: true`.
  * ------------------------------------------------------------------ */
 export const DEMO_DATA = {
-  enabled: true, // ← poner en false para ocultar el badge de Trustpilot
-  trustpilot: { score: 4.8, stars: 5, reviews: 212, profileUrl: null },
+  enabled: false,
+  trustpilot: { score: null, reviews: null, stars: 5, profileUrl: null },
 };
 
 /** Prueba social propia y verificable (no depende de terceros). */
@@ -249,9 +262,15 @@ export const FLEET_STATUS = [
   { id: 'ZP-VLF', model: 'Beechcraft King Air B200', type: 'Turbohélice', at: 'SGFI', status: 'En mantenimiento', seats: 9 },
 ];
 
+/**
+ * Estos estados se pintan sobre el panel navy del radar, así que los colores
+ * tienen que ser claros: el navy de marca sobre fondo navy es ilegible.
+ * "Asignada" usa un azul aclarado de la familia de marca, distinguible del
+ * gris de mantenimiento.
+ */
 export const FLEET_STATUS_STYLES = {
-  Disponible: { dot: '#16A34A', ring: 'rgba(22,163,74,0.16)' },
-  Asignada: { dot: '#C9A961', ring: 'rgba(201,169,97,0.16)' },
+  Disponible: { dot: '#34D399', ring: 'rgba(52,211,153,0.16)' },
+  Asignada: { dot: '#7FA9DC', ring: 'rgba(127,169,220,0.18)' },
   'En mantenimiento': { dot: '#94A3B8', ring: 'rgba(148,163,184,0.16)' },
 };
 

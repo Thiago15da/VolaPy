@@ -13,8 +13,8 @@
     overflow-x: hidden;
   }
   ::selection {
-    background: rgba(17, 17, 17, 0.08);
-    color: #111111;
+    background: rgba(196, 20, 37, 0.14);
+    color: #0A1A34;
   }
   /* El navbar es fijo: sin esto, saltar a un ancla deja el título tapado. */
   :target,
@@ -23,7 +23,7 @@
   }
   /* Foco visible y consistente para navegación por teclado */
   :focus-visible {
-    outline: 2px solid #111111;
+    outline: 2px solid #0A1A34;
     outline-offset: 2px;
     border-radius: 4px;
   }
@@ -35,15 +35,18 @@
   }
   .card-clean {
     @apply bg-white border border-gray-200/80 rounded-2xl;
-    box-shadow: 0 1px 3px rgba(17,17,17,0.04), 0 1px 2px rgba(17,17,17,0.03);
+    box-shadow: 0 1px 3px rgba(5,15,27,0.05), 0 1px 2px rgba(5,15,27,0.04);
   transition: box-shadow 0.3s cubic-bezier(0.4,0,0.2,1), transform 0.3s cubic-bezier(0.4,0,0.2,1), border-color 0.3s cubic-bezier(0.4,0,0.2,1);
   }
   .card-clean-hover:hover {
-    box-shadow: 0 8px 32px rgba(17,17,17,0.08), 0 2px 8px rgba(17,17,17,0.04);
+    box-shadow: 0 8px 32px rgba(5,15,27,0.10), 0 2px 8px rgba(5,15,27,0.05);
     transform: translateY(-3px);
-    border-color: rgba(17,17,17,0.12);
+    border-color: rgba(10,26,52,0.16);
   }
   .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-sm font-semibold text-white bg-brand-red hover:bg-brand-redDark transition-all duration-300;
+  }
+  .btn-navy {
     @apply inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-sm font-semibold text-white bg-ink-900 hover:bg-ink-800 transition-all duration-300;
   }
   .btn-outline {
@@ -56,7 +59,7 @@
     @apply py-20 md:py-28;
   }
   .eyebrow {
-    @apply text-xs font-semibold uppercase tracking-[0.16em] text-gray-400;
+    @apply font-brand text-xs font-medium uppercase tracking-[0.22em] text-gray-400;
   }
   .badge-soon {
     @apply inline-flex items-center rounded-full bg-gray-100 px-2 py-0.5 text-[0.625rem] font-semibold uppercase tracking-[0.08em] text-gray-500;

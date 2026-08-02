@@ -67,7 +67,7 @@ export default function Contacto() {
               </p>
 
               {sent ? (
-                <div className="rounded-xl border border-signal-green/25 bg-signal-green/8 p-6">
+                <div className="rounded-xl border border-signal-green/25 bg-signal-green/10 p-6">
                   <p className="flex items-center gap-2 font-semibold text-signal-green">
                     <Check size={18} />
                     Abrimos WhatsApp con tu consulta
@@ -228,7 +228,7 @@ export default function Contacto() {
                     const { x, y } = project(a.lng, a.lat);
                     return (
                       <g key={a.code}>
-                        <circle cx={x} cy={y} r={a.hub ? 10 : 7} fill={a.hub ? '#111111' : '#C9A961'} />
+                        <circle cx={x} cy={y} r={a.hub ? 10 : 7} fill={a.hub ? '#0A1A34' : '#C41425'} />
                         <text x={x + 20} y={y + 6} fill="#6B7280" fontSize="22" fontWeight="600">
                           {a.city}
                         </text>
