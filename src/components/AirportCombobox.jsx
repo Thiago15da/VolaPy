@@ -1,6 +1,7 @@
 import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { Building2 } from 'lucide-react';
 import { AIRPORTS } from '../data';
+import { useT } from '../LanguageContext';
 
 /**
  * Selector de aeropuerto con autocompletado por ciudad, nombre o código OACI.
@@ -8,6 +9,7 @@ import { AIRPORTS } from '../data';
  * Escape para cerrar y `aria-activedescendant` para lectores de pantalla.
  */
 export default function AirportCombobox({ id, label, value, onChange, placeholder, exclude }) {
+  const t = useT();
   const [query, setQuery] = useState('');
   const [open, setOpen] = useState(false);
   const [highlight, setHighlight] = useState(0);
@@ -97,7 +99,9 @@ export default function AirportCombobox({ id, label, value, onChange, placeholde
           className="absolute z-30 left-0 right-0 top-full mt-2 max-h-64 overflow-y-auto rounded-2xl border border-gray-200 bg-white p-1.5 shadow-lift"
         >
           {options.length === 0 && (
-            <li className="px-3 py-3 text-sm text-gray-400">Sin resultados para “{query}”</li>
+            <li className="px-3 py-3 text-sm text-gray-400">
+              {t('quoter.noResults')} · “{query}”
+            </li>
           )}
           {options.map((a, i) => (
             <li

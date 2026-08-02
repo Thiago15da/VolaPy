@@ -2,9 +2,11 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Phone, Mail, MapPin } from 'lucide-react';
 import { buildWhatsAppUrl, NAV_MENU, NAV_DIRECT } from '../data';
+import { useT } from '../LanguageContext';
 import { Reveal, stagger, fadeUp } from '../motion';
 
 export default function Footer() {
+  const t = useT();
   const year = new Date().getFullYear();
   return (
     <footer className="bg-cloud-100 border-t border-gray-200/70 pt-20 pb-10">
@@ -22,18 +24,18 @@ export default function Footer() {
               variants={fadeUp}
               className="text-xs font-semibold uppercase tracking-[0.16em] text-gray-400 mb-4"
             >
-              Concierge
+              {t('footer.conciergeEyebrow')}
             </motion.p>
             <motion.h2
               variants={fadeUp}
               className="font-display font-bold leading-[1.1] tracking-tight text-ink-900 mb-4"
               style={{ fontSize: 'clamp(1.9rem, 4.5vw, 3rem)' }}
             >
-              ¿Listo para elevar<br />
-              <span className="text-gray-400">su próximo viaje?</span>
+              {t('footer.ctaTitle')}<br />
+              <span className="text-gray-400">{t('footer.ctaTitle2')}</span>
             </motion.h2>
             <motion.p variants={fadeUp} className="text-gray-500 max-w-md mx-auto mb-8">
-              Nuestro equipo está disponible las 24 horas para diseñar la experiencia de vuelo perfecta.
+              {t('footer.ctaLead')}
             </motion.p>
             <motion.div variants={fadeUp} className="flex flex-wrap items-center justify-center gap-3">
               <a
@@ -42,7 +44,7 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 className="btn-primary shadow-lift"
               >
-                Contactar Concierge
+                {t('nav.concierge')}
               </a>
               <a href="tel:+595985606780" className="btn-outline">
                 +595 985 606 780
@@ -60,16 +62,15 @@ export default function Footer() {
               VOLA
             </Link>
             <p className="text-sm text-gray-500 mt-3 max-w-xs leading-relaxed">
-              El nuevo estándar en aviación privada y helicópteros en Paraguay.
-              Vuelos charter domésticos bajo demanda, con concierge dedicado 24/7.
+              {t('footer.tagline')}
             </p>
             <p className="text-xs text-gray-400 mt-4">vola.com.py</p>
           </div>
 
           {NAV_MENU.map((group) => (
-            <div key={group.label}>
+            <div key={group.key}>
               <h4 className="text-[0.625rem] uppercase tracking-[0.12em] text-gray-400 mb-4">
-                {group.label}
+                {t(group.key)}
               </h4>
               <ul className="space-y-3">
                 {group.items.map((item) => (
@@ -78,7 +79,7 @@ export default function Footer() {
                       to={item.path}
                       className="text-sm text-gray-500 hover:text-ink-900 transition-colors"
                     >
-                      {item.label}
+                      {t(item.key)}
                     </Link>
                   </li>
                 ))}
@@ -87,7 +88,7 @@ export default function Footer() {
           ))}
 
           <div>
-            <h4 className="text-[0.625rem] uppercase tracking-[0.12em] text-gray-400 mb-4">Contacto</h4>
+            <h4 className="text-[0.625rem] uppercase tracking-[0.12em] text-gray-400 mb-4">{t('footer.contact')}</h4>
             <ul className="space-y-3">
               <li>
                 <a
@@ -116,7 +117,7 @@ export default function Footer() {
             </ul>
 
             <h4 className="text-[0.625rem] uppercase tracking-[0.12em] text-gray-400 mt-8 mb-4">
-              Más
+              {t('nav.more')}
             </h4>
             <ul className="space-y-3">
               {NAV_DIRECT.map((item) => (
@@ -125,7 +126,7 @@ export default function Footer() {
                     to={item.path}
                     className="text-sm text-gray-500 hover:text-ink-900 transition-colors"
                   >
-                    {item.label}
+                    {t(item.key)}
                   </Link>
                 </li>
               ))}
@@ -137,16 +138,16 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pt-8 border-t border-gray-200/70">
           <div className="flex flex-wrap gap-x-6 gap-y-2">
             <Link to="/politica-privacidad" className="text-xs text-gray-400 hover:text-ink-900 transition-colors">
-              Política de Privacidad
+              {t('nav.privacy')}
             </Link>
             <Link to="/seguridad" className="text-xs text-gray-400 hover:text-ink-900 transition-colors">
-              Seguridad
+              {t('nav.safety')}
             </Link>
             <Link to="/contacto" className="text-xs text-gray-400 hover:text-ink-900 transition-colors">
-              Contacto
+              {t('nav.contact')}
             </Link>
           </div>
-          <p className="text-xs text-gray-400">© {year} VOLA. Todos los derechos reservados.</p>
+          <p className="text-xs text-gray-400">© {year} VOLA. {t('footer.rights')}</p>
         </div>
       </div>
     </footer>
