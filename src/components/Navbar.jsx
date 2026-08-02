@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Phone, ChevronDown } from 'lucide-react';
 import { NAV_MENU, NAV_DIRECT } from '../data';
 import { useT } from '../LanguageContext';
+import Logo from './Logo';
 import LanguageSelector from './LanguageSelector';
 
 function Badge({ children }) {
@@ -194,13 +195,8 @@ export default function Navbar() {
         }`}
       >
         <nav className="shell h-16 md:h-[72px] flex items-center justify-between gap-6">
-          <Link
-            to="/"
-            className={`font-display text-xl md:text-2xl font-extrabold tracking-[0.06em] transition-colors duration-300 ${
-              solid ? 'text-ink-900' : 'text-white'
-            }`}
-          >
-            VOLA
+          <Link to="/" aria-label="VOLA Paraguay — Inicio" className="shrink-0">
+            <Logo variant={solid ? 'dark' : 'light'} size="md" />
           </Link>
 
           <div className="hidden xl:flex items-center gap-7">
@@ -231,9 +227,7 @@ export default function Navbar() {
             <LanguageSelector solid={solid} />
             <Link
               to="/contacto"
-              className={`whitespace-nowrap rounded-xl px-5 py-2.5 text-sm font-semibold transition-all duration-300 ${
-                solid ? 'text-white bg-ink-900 hover:bg-ink-800' : 'text-ink-900 bg-white hover:bg-white/90'
-              }`}
+              className="whitespace-nowrap rounded-xl bg-brand-red px-5 py-2.5 text-sm font-semibold text-white transition-all duration-300 hover:bg-brand-redDark"
             >
               {t('nav.concierge')}
             </Link>
@@ -261,12 +255,8 @@ export default function Navbar() {
             className="fixed inset-0 z-[60] xl:hidden bg-white flex flex-col"
           >
             <div className="h-16 flex items-center justify-between px-5 border-b border-gray-200 shrink-0">
-              <Link
-                to="/"
-                onClick={() => setOpen(false)}
-                className="font-display text-xl font-extrabold tracking-[0.06em] text-ink-900"
-              >
-                VOLA
+              <Link to="/" onClick={() => setOpen(false)} aria-label="VOLA Paraguay — Inicio">
+                <Logo variant="dark" size="sm" />
               </Link>
               <button
                 onClick={() => setOpen(false)}

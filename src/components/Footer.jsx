@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Phone, Mail, MapPin } from 'lucide-react';
 import { buildWhatsAppUrl, NAV_MENU, NAV_DIRECT } from '../data';
 import { useT } from '../LanguageContext';
+import Logo from './Logo';
 import { Reveal, stagger, fadeUp } from '../motion';
 
 export default function Footer() {
@@ -58,8 +59,8 @@ export default function Footer() {
             demasiado angosta para el email y desborda el ancho de página. */}
         <div className="grid grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8 mb-12">
           <div className="col-span-2">
-            <Link to="/" className="font-display text-2xl font-extrabold tracking-[0.06em] text-ink-900">
-              VOLA
+            <Link to="/" aria-label="VOLA Paraguay — Inicio" className="inline-block">
+              <Logo variant="dark" size="lg" withTagline />
             </Link>
             <p className="text-sm text-gray-500 mt-3 max-w-xs leading-relaxed">
               {t('footer.tagline')}

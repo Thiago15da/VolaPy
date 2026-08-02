@@ -4,6 +4,19 @@ import { haversineKm } from './geo';
 
 export const WHATSAPP_NUMBER = '595985606780';
 
+/**
+ * Isotipo de marca (las dos alas con la bandera).
+ *
+ * Pendiente: el diseñador debe entregar el vectorial. Cuando esté, dejarlo
+ * en `public/` y apuntar acá — por ejemplo '/logo-vola.svg'. El componente
+ * Logo lo muestra automáticamente junto al wordmark en navbar y footer.
+ *
+ * Se mantiene en null a propósito: reconstruir el isotipo a mano desde los
+ * mockups en JPEG daría una versión parecida pero distinta de la identidad
+ * real, y eso es peor que mostrar sólo el logotipo tipográfico.
+ */
+export const BRAND_MARK_SRC = null;
+
 // Fondo del Hero. Idealmente: cabina interior de jet ejecutivo (cuero claro,
 // ventanas ovales). Se muestra a opacidad completa con overlay oscuro encima.
 export const HERO_IMAGE =
@@ -249,9 +262,15 @@ export const FLEET_STATUS = [
   { id: 'ZP-VLF', model: 'Beechcraft King Air B200', type: 'Turbohélice', at: 'SGFI', status: 'En mantenimiento', seats: 9 },
 ];
 
+/**
+ * Estos estados se pintan sobre el panel navy del radar, así que los colores
+ * tienen que ser claros: el navy de marca sobre fondo navy es ilegible.
+ * "Asignada" usa un azul aclarado de la familia de marca, distinguible del
+ * gris de mantenimiento.
+ */
 export const FLEET_STATUS_STYLES = {
-  Disponible: { dot: '#16A34A', ring: 'rgba(22,163,74,0.16)' },
-  Asignada: { dot: '#C9A961', ring: 'rgba(201,169,97,0.16)' },
+  Disponible: { dot: '#34D399', ring: 'rgba(52,211,153,0.16)' },
+  Asignada: { dot: '#7FA9DC', ring: 'rgba(127,169,220,0.18)' },
   'En mantenimiento': { dot: '#94A3B8', ring: 'rgba(148,163,184,0.16)' },
 };
 

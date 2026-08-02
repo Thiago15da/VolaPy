@@ -61,7 +61,7 @@ export default function ComingSoon({ product, title, description, bullets = [], 
               </p>
 
               {sent ? (
-                <div className="rounded-xl bg-signal-green/8 border border-signal-green/25 p-5">
+                <div className="rounded-xl bg-signal-green/10 border border-signal-green/25 p-5">
                   <p className="flex items-center gap-2 text-sm font-semibold text-signal-green">
                     <Check size={16} />
                     Listo, abrimos WhatsApp

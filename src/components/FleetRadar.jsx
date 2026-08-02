@@ -84,16 +84,16 @@ export default function FleetRadar() {
                     aria-label={`${b.city} (${b.code}) — ${count}`}
                     className="cursor-pointer"
                   >
-                    {active && <circle r="26" fill="rgba(201,169,97,0.14)" />}
+                    {active && <circle r="26" fill="rgba(196,20,37,0.16)" />}
                     <circle
                       r={active ? 11 : 8}
-                      fill={active ? '#C9A961' : 'rgba(255,255,255,0.85)'}
+                      fill={active ? '#C41425' : 'rgba(255,255,255,0.85)'}
                       className="transition-all duration-300"
                     />
                     <circle
                       r={active ? 19 : 15}
                       fill="none"
-                      stroke={active ? 'rgba(201,169,97,0.5)' : 'rgba(255,255,255,0.2)'}
+                      stroke={active ? 'rgba(196,20,37,0.55)' : 'rgba(255,255,255,0.2)'}
                       strokeWidth="1.5"
                     />
                     <text
@@ -156,7 +156,7 @@ export default function FleetRadar() {
                     return (
                       <li
                         key={c.id}
-                        className="flex items-center gap-3 rounded-xl border border-white/8 bg-white/[0.03] px-3.5 py-3"
+                        className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.03] px-3.5 py-3"
                       >
                         <span
                           className="h-2 w-2 shrink-0 rounded-full"
@@ -178,7 +178,7 @@ export default function FleetRadar() {
                     );
                   })}
                   {aircraft.length === 0 && (
-                    <li className="rounded-xl border border-dashed border-white/12 px-3.5 py-6 text-center text-sm text-white/40">
+                    <li className="rounded-xl border border-dashed border-white/10 px-3.5 py-6 text-center text-sm text-white/40">
                       <Plane size={18} className="mx-auto mb-2 text-white/25" />
                       {t('radar.selectBase')}
                     </li>
