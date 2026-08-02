@@ -5,9 +5,16 @@ export default {
     extend: {
       colors: {
         ink: {
+          950: '#0F172A',
           900: '#111111',
           800: '#1a1a1a',
           700: '#222222',
+        },
+        signal: {
+          green: '#16A34A',
+          whatsapp: '#25D366',
+          amber: '#C9A961',
+          red: '#DC2626',
         },
         cloud: {
           50: '#FFFFFF',
@@ -41,9 +48,14 @@ export default {
           '0%': { opacity: '0', transform: 'translateY(20px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
+        'radar-ping': {
+          '0%': { transform: 'scale(0.6)', opacity: '0.55' },
+          '100%': { transform: 'scale(2.4)', opacity: '0' },
+        },
       },
       animation: {
         'fade-up': 'fade-up 0.6s cubic-bezier(0.4,0,0.2,1) both',
+        'radar-ping': 'radar-ping 2.4s cubic-bezier(0,0,0.2,1) infinite',
       },
     },
   },

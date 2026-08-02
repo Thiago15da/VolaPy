@@ -1,9 +1,9 @@
 import { motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
-import { FLEET } from '../data';
+import { FLEET, buildWhatsAppUrl, formatFleetMessage } from '../data';
 import { Reveal, stagger, fadeUp } from '../motion';
 
-export default function Fleet() {
+export default function Fleet({ heading = 'Aeronaves de élite, a su disposición' }) {
   return (
     <section id="flota" className="py-20 md:py-32 bg-cloud-100">
       <div className="max-w-container mx-auto px-5 sm:px-8">
@@ -15,7 +15,7 @@ export default function Fleet() {
             className="font-display font-bold leading-[1.08] tracking-tight text-ink-900"
             style={{ fontSize: 'clamp(2rem, 4.5vw, 3rem)' }}
           >
-            Aeronaves de élite, a su disposición
+            {heading}
           </h2>
         </Reveal>
 
@@ -24,7 +24,7 @@ export default function Fleet() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: '0px 0px -40px 0px' }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-5"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
         >
           {FLEET.map((jet) => (
             <motion.article
@@ -60,7 +60,9 @@ export default function Fleet() {
                 </dl>
 
                 <a
-                  href="#contacto"
+                  href={buildWhatsAppUrl(formatFleetMessage(jet))}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-ink-900 hover:text-gray-500 transition-colors"
                 >
                   Solicitar disponibilidad

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VOLA</title>
+    <!--
+      GitHub Pages sirve este archivo ante cualquier ruta desconocida.
+      En vez de mostrar un 404, codifica la ruta pedida en la query y
+      redirige a la raíz; el script de index.html la restaura y React
+      Router resuelve la vista correcta (o su propio 404 interno).
+    -->
+    <script>
+      (function (l) {
+        l.replace(
+          l.protocol +
+            '//' +
+            l.hostname +
+            (l.port ? ':' + l.port : '') +
+            '/?/' +
+            l.pathname.slice(1).replace(/&/g, '~and~') +
+            (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+            l.hash
+        );
+      })(window.location);
+    </script>
+  </head>
+  <body></body>
+</html>

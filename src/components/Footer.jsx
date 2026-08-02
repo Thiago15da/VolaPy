@@ -1,25 +1,13 @@
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Phone, Mail, MapPin } from 'lucide-react';
-import { buildWhatsAppUrl } from '../data';
+import { buildWhatsAppUrl, NAV_MENU, NAV_DIRECT } from '../data';
 import { Reveal, stagger, fadeUp } from '../motion';
-
-const NAV = [
-  { label: 'Flota', href: '#flota' },
-  { label: 'Experiencias', href: '#experiencias' },
-  { label: 'Empty Legs', href: '#empty-legs' },
-  { label: 'Contacto', href: '#contacto' },
-];
-
-const LEGAL = [
-  { label: 'Términos y Condiciones', href: '#' },
-  { label: 'Política de Privacidad', href: '#' },
-  { label: 'Política de Cookies', href: '#' },
-];
 
 export default function Footer() {
   const year = new Date().getFullYear();
   return (
-    <footer id="contacto" className="bg-cloud-100 border-t border-gray-200/70 pt-20 pb-10">
+    <footer className="bg-cloud-100 border-t border-gray-200/70 pt-20 pb-10">
       <div className="max-w-container mx-auto px-5 sm:px-8">
         {/* CTA block */}
         <Reveal className="card-clean p-8 md:p-14 text-center relative overflow-hidden mb-20 shadow-card">
@@ -64,9 +52,13 @@ export default function Footer() {
         </Reveal>
 
         {/* Footer grid */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10 md:gap-8 mb-12">
-          <div className="md:col-span-2">
-            <span className="font-display text-2xl font-extrabold tracking-[0.06em] text-ink-900">VOLA</span>
+        {/* 5 columnas sólo desde lg: en tablet la columna de contacto queda
+            demasiado angosta para el email y desborda el ancho de página. */}
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8 mb-12">
+          <div className="col-span-2">
+            <Link to="/" className="font-display text-2xl font-extrabold tracking-[0.06em] text-ink-900">
+              VOLA
+            </Link>
             <p className="text-sm text-gray-500 mt-3 max-w-xs leading-relaxed">
               El nuevo estándar en aviación privada y helicópteros en Paraguay.
               Vuelos charter domésticos bajo demanda, con concierge dedicado 24/7.
@@ -74,18 +66,25 @@ export default function Footer() {
             <p className="text-xs text-gray-400 mt-4">vola.com.py</p>
           </div>
 
-          <div>
-            <h4 className="text-[0.625rem] uppercase tracking-[0.12em] text-gray-400 mb-4">Navegación</h4>
-            <ul className="space-y-3">
-              {NAV.map((l) => (
-                <li key={l.label}>
-                  <a href={l.href} className="text-sm text-gray-500 hover:text-ink-900 transition-colors">
-                    {l.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {NAV_MENU.map((group) => (
+            <div key={group.label}>
+              <h4 className="text-[0.625rem] uppercase tracking-[0.12em] text-gray-400 mb-4">
+                {group.label}
+              </h4>
+              <ul className="space-y-3">
+                {group.items.map((item) => (
+                  <li key={item.path}>
+                    <Link
+                      to={item.path}
+                      className="text-sm text-gray-500 hover:text-ink-900 transition-colors"
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
 
           <div>
             <h4 className="text-[0.625rem] uppercase tracking-[0.12em] text-gray-400 mb-4">Contacto</h4>
@@ -102,9 +101,12 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="mailto:concierge@vola.com.py" className="flex items-center gap-2 text-sm text-gray-500 hover:text-ink-900 transition-colors">
-                  <Mail size={14} />
-                  concierge@vola.com.py
+                <a
+                  href="mailto:concierge@vola.com.py"
+                  className="flex items-start gap-2 text-sm text-gray-500 hover:text-ink-900 transition-colors"
+                >
+                  <Mail size={14} className="mt-0.5 shrink-0" />
+                  <span className="min-w-0 break-all">concierge@vola.com.py</span>
                 </a>
               </li>
               <li className="flex items-center gap-2 text-sm text-gray-500">
@@ -112,17 +114,37 @@ export default function Footer() {
                 Asunción, Paraguay
               </li>
             </ul>
+
+            <h4 className="text-[0.625rem] uppercase tracking-[0.12em] text-gray-400 mt-8 mb-4">
+              Más
+            </h4>
+            <ul className="space-y-3">
+              {NAV_DIRECT.map((item) => (
+                <li key={item.path}>
+                  <Link
+                    to={item.path}
+                    className="text-sm text-gray-500 hover:text-ink-900 transition-colors"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
 
         {/* Legal */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pt-8 border-t border-gray-200/70">
           <div className="flex flex-wrap gap-x-6 gap-y-2">
-            {LEGAL.map((l) => (
-              <a key={l.label} href={l.href} className="text-xs text-gray-400 hover:text-ink-900 transition-colors">
-                {l.label}
-              </a>
-            ))}
+            <Link to="/politica-privacidad" className="text-xs text-gray-400 hover:text-ink-900 transition-colors">
+              Política de Privacidad
+            </Link>
+            <Link to="/seguridad" className="text-xs text-gray-400 hover:text-ink-900 transition-colors">
+              Seguridad
+            </Link>
+            <Link to="/contacto" className="text-xs text-gray-400 hover:text-ink-900 transition-colors">
+              Contacto
+            </Link>
           </div>
           <p className="text-xs text-gray-400">© {year} VOLA. Todos los derechos reservados.</p>
         </div>

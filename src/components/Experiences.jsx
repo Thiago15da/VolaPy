@@ -67,11 +67,9 @@ export default function Experiences() {
                   <p className="text-sm text-gray-500 leading-relaxed mb-6 flex-1">{exp.desc}</p>
 
                   <a
-                    href="#contacto"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      window.open(buildWhatsAppUrl(formatExperienceMessage(exp)), '_blank', 'noopener,noreferrer');
-                    }}
+                    href={buildWhatsAppUrl(formatExperienceMessage(exp))}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 text-sm font-semibold text-ink-900 hover:text-gray-500 transition-colors"
                   >
                     Reservar experiencia
