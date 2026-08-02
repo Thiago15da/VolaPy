@@ -15,15 +15,18 @@ export const HERO_IMAGE =
  * el radar de flota (lat/lng) y el radar de clima aeronáutico.
  */
 export const AIRPORTS = [
-  { code: 'SGAS', city: 'Asunción', name: 'Silvio Pettirossi', lat: -25.24, lng: -57.52, hub: true },
-  { code: 'SGES', city: 'Ciudad del Este', name: 'Guaraní', lat: -25.455, lng: -54.842 },
-  { code: 'SGEN', city: 'Encarnación', name: 'Teniente Amin Ayub', lat: -27.228, lng: -55.837 },
+  { code: 'SGAS', city: 'Asunción', name: 'Silvio Pettirossi', lat: -25.24, lng: -57.52, hub: true, base: true },
+  { code: 'SGES', city: 'Ciudad del Este', name: 'Guaraní', lat: -25.455, lng: -54.842, base: true },
+  { code: 'SGEN', city: 'Encarnación', name: 'Teniente Amin Ayub', lat: -27.228, lng: -55.837, base: true },
+  { code: 'SGFI', city: 'Filadelfia', name: 'Chaco Central', lat: -22.343, lng: -60.028, base: true },
   { code: 'SGPJ', city: 'Pedro Juan Caballero', name: 'Dr. Augusto R. Fuster', lat: -22.64, lng: -55.83 },
-  { code: 'SGFI', city: 'Filadelfia', name: 'Chaco Central', lat: -22.343, lng: -60.028 },
   { code: 'SGCO', city: 'Concepción', name: 'Mcal. López', lat: -23.442, lng: -57.427 },
   { code: 'SGPI', city: 'Pilar', name: 'Carlos Miguel Jiménez', lat: -26.881, lng: -58.317 },
   { code: 'SGST', city: 'Salto del Guairá', name: 'Salto del Guairá', lat: -24.033, lng: -54.311 },
 ];
+
+/** Bases operativas: las únicas que se marcan en el radar de flota. */
+export const BASES = AIRPORTS.filter((a) => a.base);
 
 /** Etiqueta legible de un aeropuerto: "Asunción (SGAS - Silvio Pettirossi)" */
 export function airportLabel(airport) {
@@ -121,46 +124,44 @@ export const EXPERIENCES = [
   },
 ];
 
-export const EMPTY_LEGS = [
+/* ------------------------------------------------------------------ *
+ * RUTAS FRECUENTES
+ *
+ * Reemplaza al listado de empty legs, que publicaba vuelos con fechas y
+ * precios concretos que no existían. Esto es información verdadera:
+ * conexiones reales con tiempos de vuelo y tipo de aeronave.
+ * ------------------------------------------------------------------ */
+
+export const FREQUENT_ROUTES = [
   {
-    id: 1,
-    from: 'Asunción',
-    to: 'Punta del Este',
-    date: '12 Ago',
-    aircraft: 'Citation CJ3',
-    seats: 6,
-    price: 2100,
-    discount: 35,
+    id: 'asu-fil',
+    from: 'SGAS',
+    to: 'SGFI',
+    duration: '~1h 10m',
+    aircraft: 'Turboprop',
+    blurb: 'Conexión directa con el polo agroindustrial.',
+    image:
+      'https://images.pexels.com/photos/17249810/pexels-photo-17249810.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&dpr=2',
   },
   {
-    id: 2,
-    from: 'Asunción',
-    to: 'São Paulo',
-    date: '15 Ago',
-    aircraft: 'Citation CJ3',
-    seats: 4,
-    price: 1650,
-    discount: 40,
+    id: 'asu-cde',
+    from: 'SGAS',
+    to: 'SGES',
+    duration: '~45m',
+    aircraft: 'Twin Engine / Jet',
+    blurb: 'Viajes de negocios exprés al Este.',
+    image:
+      'https://images.pexels.com/photos/18389297/pexels-photo-18389297.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&dpr=2',
   },
   {
-    id: 3,
-    from: 'Buenos Aires',
-    to: 'Asunción',
-    date: '18 Ago',
-    aircraft: 'King Air B200',
-    seats: 7,
-    price: 1450,
-    discount: 28,
-  },
-  {
-    id: 4,
-    from: 'Encarnación',
-    to: 'Ciudad del Este',
-    date: '21 Ago',
-    aircraft: 'Airbus H125',
-    seats: 5,
-    price: 890,
-    discount: 45,
+    id: 'asu-enc',
+    from: 'SGAS',
+    to: 'SGEN',
+    duration: '~50m',
+    aircraft: 'Light Aircraft',
+    blurb: 'Turismo y reuniones ejecutivas en el Sur.',
+    image:
+      'https://images.pexels.com/photos/4277458/pexels-photo-4277458.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&dpr=2',
   },
 ];
 
@@ -171,32 +172,38 @@ export const EMPTY_LEGS = [
 
 export const SOON = 'Próximamente';
 
+/**
+ * Los ítems llevan clave de traducción en vez de etiqueta literal: Navbar y
+ * Footer las resuelven con t(), de modo que la navegación sigue teniendo
+ * una sola fuente en los cuatro idiomas.
+ */
 export const NAV_MENU = [
   {
-    label: 'Productos',
+    key: 'nav.products',
     items: [
-      { label: 'Taxi aéreo', path: '/taxi-aereo' },
-      { label: 'Vuelos panorámicos', path: '/vuelos-panoramicos' },
-      { label: 'Vuelos compartidos', path: '/vuelos-compartidos', badge: SOON },
-      { label: 'Empty legs', path: '/empty-legs', badge: SOON },
-      { label: 'Experiencias exclusivas', path: '/experiencias-exclusivas' },
-      { label: 'Adquisición de aeronaves', path: '/adquisicion-aeronaves', badge: SOON },
+      { key: 'nav.taxiAereo', path: '/taxi-aereo' },
+      { key: 'nav.panoramic', path: '/vuelos-panoramicos' },
+      { key: 'nav.shared', path: '/vuelos-compartidos', soon: true },
+      { key: 'nav.emptyLegs', path: '/empty-legs', soon: true },
+      { key: 'nav.experiences', path: '/experiencias-exclusivas' },
+      { key: 'nav.acquisition', path: '/adquisicion-aeronaves', soon: true },
     ],
   },
   {
-    label: 'Empresa',
+    key: 'nav.company',
     items: [
-      { label: 'Sobre nosotros', path: '/sobre-nosotros' },
-      { label: 'App', path: '/app', badge: SOON },
-      { label: 'Seguridad', path: '/seguridad' },
-      { label: 'Política de privacidad', path: '/politica-privacidad' },
+      { key: 'nav.about', path: '/sobre-nosotros' },
+      { key: 'nav.app', path: '/app', soon: true },
+      { key: 'nav.safety', path: '/seguridad' },
+      { key: 'nav.privacy', path: '/politica-privacidad' },
     ],
   },
 ];
 
 export const NAV_DIRECT = [
-  { label: 'Membresía VOLA', path: '/membresia', badge: SOON },
-  { label: 'Contacto', path: '/contacto' },
+  { key: 'nav.membership', path: '/membresia', soon: true },
+  { key: 'nav.community', path: '/comunidad' },
+  { key: 'nav.contact', path: '/contacto' },
 ];
 
 /* ------------------------------------------------------------------ *
@@ -228,20 +235,30 @@ export const TRUST_POINTS = [
  * `progress` sitúa a las aeronaves en vuelo entre origen y destino.
  * ------------------------------------------------------------------ */
 
+/* ------------------------------------------------------------------ *
+ * FLOTA POR BASE
+ * Distribución estática: el radar no simula vuelos en curso.
+ * ------------------------------------------------------------------ */
+
 export const FLEET_STATUS = [
-  { id: 'ZP-VLA', model: 'Cessna Citation CJ3', type: 'Jet Ejecutivo', status: 'En vuelo', from: 'SGAS', to: 'SGES', progress: 0.42, altitude: '31.000 ft', speed: '742 km/h' },
-  { id: 'ZP-VLB', model: 'Beechcraft King Air B200', type: 'Turbohélice', status: 'En vuelo', from: 'SGEN', to: 'SGAS', progress: 0.68, altitude: '18.500 ft', speed: '455 km/h' },
-  { id: 'ZP-VLC', model: 'Airbus H125', type: 'Helicóptero', status: 'En tierra', at: 'SGAS', altitude: '—', speed: '—' },
-  { id: 'ZP-VLD', model: 'Cessna Citation CJ3', type: 'Jet Ejecutivo', status: 'En hangar', at: 'SGAS', altitude: '—', speed: '—' },
-  { id: 'ZP-VLE', model: 'Airbus H125', type: 'Helicóptero', status: 'En tierra', at: 'SGCO', altitude: '—', speed: '—' },
-  { id: 'ZP-VLF', model: 'Beechcraft King Air B200', type: 'Turbohélice', status: 'En hangar', at: 'SGFI', altitude: '—', speed: '—' },
+  { id: 'ZP-VLA', model: 'Cessna Citation CJ3', type: 'Jet Ejecutivo', at: 'SGAS', status: 'Disponible', seats: 9 },
+  { id: 'ZP-VLB', model: 'Beechcraft King Air B200', type: 'Turbohélice', at: 'SGAS', status: 'Asignada', seats: 9 },
+  { id: 'ZP-VLC', model: 'Airbus H125', type: 'Helicóptero', at: 'SGAS', status: 'Disponible', seats: 6 },
+  { id: 'ZP-VLD', model: 'Cessna Citation CJ3', type: 'Jet Ejecutivo', at: 'SGES', status: 'Disponible', seats: 9 },
+  { id: 'ZP-VLE', model: 'Airbus H125', type: 'Helicóptero', at: 'SGEN', status: 'Disponible', seats: 6 },
+  { id: 'ZP-VLF', model: 'Beechcraft King Air B200', type: 'Turbohélice', at: 'SGFI', status: 'En mantenimiento', seats: 9 },
 ];
 
 export const FLEET_STATUS_STYLES = {
-  'En vuelo': { dot: '#16A34A', ring: 'rgba(22,163,74,0.18)', label: 'En vuelo' },
-  'En tierra': { dot: '#C9A961', ring: 'rgba(201,169,97,0.18)', label: 'En tierra' },
-  'En hangar': { dot: '#94A3B8', ring: 'rgba(148,163,184,0.18)', label: 'En hangar' },
+  Disponible: { dot: '#16A34A', ring: 'rgba(22,163,74,0.16)' },
+  Asignada: { dot: '#C9A961', ring: 'rgba(201,169,97,0.16)' },
+  'En mantenimiento': { dot: '#94A3B8', ring: 'rgba(148,163,184,0.16)' },
 };
+
+/** Aeronaves estacionadas en una base. */
+export function fleetAtBase(code) {
+  return FLEET_STATUS.filter((c) => c.at === code);
+}
 
 /* ------------------------------------------------------------------ *
  * CLIMA AERONÁUTICO (datos de referencia)
@@ -261,22 +278,55 @@ export const WEATHER_STATIONS = [
   { code: 'SGEN', category: 'VFR', tempC: 26, dewC: 17, windDeg: 160, windKt: 10, visibilityKm: 10, clouds: 'SCT 4.000 ft', precip: 'Sin precipitación', qnh: 1014,
     metar: 'SGEN 021500Z 16010KT 9999 SCT040 26/17 Q1014',
     taf: 'TAF SGEN 021400Z 0215/0315 16008KT 9999 SCT040' },
-  { code: 'SGPJ', category: 'VFR', tempC: 31, dewC: 18, windDeg: 60, windKt: 6, visibilityKm: 10, clouds: 'Despejado', precip: 'Sin precipitación', qnh: 1012,
-    metar: 'SGPJ 021500Z 06006KT 9999 SKC 31/18 Q1012',
-    taf: 'TAF SGPJ 021400Z 0215/0315 06006KT 9999 SKC' },
   { code: 'SGFI', category: 'IFR', tempC: 33, dewC: 24, windDeg: 340, windKt: 18, visibilityKm: 3, clouds: 'OVC 900 ft', precip: 'Tormenta en las cercanías', qnh: 1008,
     metar: 'SGFI 021500Z 34018G28KT 3000 TS OVC009 33/24 Q1008',
     taf: 'TAF SGFI 021400Z 0215/0315 34018G30KT 3000 TSRA OVC009' },
-  { code: 'SGCO', category: 'VFR', tempC: 30, dewC: 20, windDeg: 110, windKt: 7, visibilityKm: 10, clouds: 'FEW 3.500 ft', precip: 'Sin precipitación', qnh: 1012,
-    metar: 'SGCO 021500Z 11007KT 9999 FEW035 30/20 Q1012',
-    taf: 'TAF SGCO 021400Z 0215/0315 11007KT 9999 FEW035' },
 ];
 
+/** Convención de color de las cartas aeronáuticas: VFR verde, MVFR azul, IFR rojo. */
 export const WEATHER_CATEGORIES = {
   VFR: { color: '#16A34A', label: 'VFR', desc: 'Condiciones visuales' },
-  MVFR: { color: '#C9A961', label: 'MVFR', desc: 'Visuales marginales' },
+  MVFR: { color: '#2563EB', label: 'MVFR', desc: 'Visuales marginales' },
   IFR: { color: '#DC2626', label: 'IFR', desc: 'Vuelo instrumental' },
 };
+
+/* ------------------------------------------------------------------ *
+ * MAPA METEOROLÓGICO EN VIVO (Windy)
+ * ------------------------------------------------------------------ */
+
+export const WEATHER_LAYERS = [
+  { id: 'wind', key: 'weather.layerWind' },
+  { id: 'clouds', key: 'weather.layerClouds' },
+  { id: 'rain', key: 'weather.layerRain' },
+];
+
+/** Centro del encuadre: Paraguay completo, con algo de contexto regional. */
+const WINDY_CENTER = { lat: -23.4, lon: -58.4, zoom: 5 };
+
+export function buildWindyUrl(overlay = 'wind') {
+  const p = new URLSearchParams({
+    lat: WINDY_CENTER.lat,
+    lon: WINDY_CENTER.lon,
+    zoom: WINDY_CENTER.zoom,
+    level: 'surface',
+    overlay,
+    product: 'ecmwf',
+    menu: '',
+    message: '',
+    marker: '',
+    calendar: 'now',
+    pressure: '',
+    type: 'map',
+    location: 'coordinates',
+    detail: '',
+    metricWind: 'kt',
+    metricTemp: '°C',
+    radarRange: '-1',
+  });
+  return `https://embed.windy.com/embed2.html?${p}`;
+}
+
+export const WINDY_FULL_URL = `https://www.windy.com/?${WINDY_CENTER.lat},${WINDY_CENTER.lon},${WINDY_CENTER.zoom}`;
 
 /**
  * Punto único de lectura del clima. Hoy sirve WEATHER_STATIONS;
@@ -345,19 +395,39 @@ export function formatQuoteMessage({
   ].join('\n');
 }
 
-export function formatEmptyLegMessage({ from, to, date, aircraft, seats, price }) {
+export function formatRouteMessage({ from, to, duration, aircraft }) {
   return [
-    '*VOLA — Empty Leg*',
+    '*VOLA — Ruta Frecuente*',
     '',
-    `*Ruta:* ${from} → ${to}`,
-    `*Fecha:* ${date}`,
-    `*Aeronave:* ${aircraft}`,
-    `*Asientos:* ${seats}`,
-    `*Tarifa:* $${price.toLocaleString('en-US')} USD`,
+    `*Ruta:* ${airportLabel(from)} → ${airportLabel(to)}`,
+    `*Tiempo estimado:* ${duration}`,
+    `*Aeronave sugerida:* ${aircraft}`,
     '',
-    'Deseo reservar este vuelo de oportunidad.',
+    'Quiero cotizar esta ruta.',
   ].join('\n');
 }
+
+export function formatPilotMessage({ name, phone, hours, license }) {
+  return [
+    '*VOLA — Pre-registro Comunidad de Pilotos*',
+    '',
+    `*Nombre:* ${name || '—'}`,
+    `*Teléfono:* ${phone || '—'}`,
+    `*Horas de vuelo:* ${hours || '—'}`,
+    `*Tipo de licencia:* ${license || '—'}`,
+    '',
+    'Quiero sumarme a la comunidad de pilotos de VOLA.',
+  ].join('\n');
+}
+
+/** Licencias de piloto reconocidas. Se pide el tipo, nunca el número. */
+export const LICENSE_TYPES = [
+  'PPL — Piloto Privado',
+  'CPL — Piloto Comercial',
+  'ATPL — Piloto de Transporte de Línea Aérea',
+  'Piloto de Helicóptero',
+  'En formación',
+];
 
 export function formatExperienceMessage({ title, tag }) {
   return [

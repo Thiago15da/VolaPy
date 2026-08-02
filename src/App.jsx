@@ -12,6 +12,7 @@ import AppPage from './pages/AppPage';
 import Seguridad from './pages/Seguridad';
 import PoliticaPrivacidad from './pages/PoliticaPrivacidad';
 import Membresia from './pages/Membresia';
+import ComunidadPilotos from './pages/ComunidadPilotos';
 import Contacto from './pages/Contacto';
 import NotFound from './pages/NotFound';
 
@@ -37,6 +38,7 @@ export default function App() {
 
         {/* Directos */}
         <Route path="membresia" element={<Membresia />} />
+        <Route path="comunidad" element={<ComunidadPilotos />} />
         <Route path="contacto" element={<Contacto />} />
 
         <Route path="*" element={<NotFound />} />

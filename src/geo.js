@@ -38,11 +38,6 @@ export function project(lng, lat) {
   return { x, y };
 }
 
-/** Interpola entre dos puntos geográficos (t de 0 a 1). */
-export function interpolate(a, b, t) {
-  return { lat: a.lat + (b.lat - a.lat) * t, lng: a.lng + (b.lng - a.lng) * t };
-}
-
 /** Distancia de círculo máximo en km entre dos puntos {lat, lng}. */
 export function haversineKm(a, b) {
   const R = 6371;
@@ -53,13 +48,6 @@ export function haversineKm(a, b) {
     Math.sin(dLat / 2) ** 2 +
     Math.cos(toRad(a.lat)) * Math.cos(toRad(b.lat)) * Math.sin(dLng / 2) ** 2;
   return 2 * R * Math.asin(Math.sqrt(h));
-}
-
-/** Rumbo en grados de A hacia B, para orientar el icono de la aeronave. */
-export function bearing(a, b) {
-  const dx = (b.lng - a.lng) * Math.cos(MID_LAT_RAD);
-  const dy = a.lat - b.lat;
-  return (Math.atan2(dx, dy) * 180) / Math.PI;
 }
 
 /**

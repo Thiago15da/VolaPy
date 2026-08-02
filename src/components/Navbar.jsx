@@ -3,12 +3,15 @@ import { Link, NavLink, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Phone, ChevronDown } from 'lucide-react';
 import { NAV_MENU, NAV_DIRECT } from '../data';
+import { useT } from '../LanguageContext';
+import LanguageSelector from './LanguageSelector';
 
 function Badge({ children }) {
   return <span className="badge-soon ml-2">{children}</span>;
 }
 
 function DesktopDropdown({ group, solid }) {
+  const t = useT();
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
   const closeTimer = useRef(null);
@@ -60,7 +63,7 @@ function DesktopDropdown({ group, solid }) {
         onClick={() => setOpen((v) => !v)}
         className={`flex items-center gap-1.5 text-sm transition-colors duration-300 ${idle}`}
       >
-        {group.label}
+        {t(group.key)}
         <ChevronDown
           size={14}
           className={`transition-transform duration-300 ${open ? 'rotate-180' : ''}`}
@@ -90,8 +93,8 @@ function DesktopDropdown({ group, solid }) {
                     }`
                   }
                 >
-                  <span>{item.label}</span>
-                  {item.badge && <Badge>{item.badge}</Badge>}
+                  <span>{t(item.key)}</span>
+                  {item.soon && <Badge>{t('common.soon')}</Badge>}
                 </NavLink>
               ))}
             </div>
@@ -103,6 +106,7 @@ function DesktopDropdown({ group, solid }) {
 }
 
 function MobileAccordion({ group, onNavigate }) {
+  const t = useT();
   const [open, setOpen] = useState(false);
   return (
     <div className="border-b border-gray-100">
@@ -112,7 +116,7 @@ function MobileAccordion({ group, onNavigate }) {
         onClick={() => setOpen((v) => !v)}
         className="flex w-full items-center justify-between py-4 text-left font-display text-lg font-semibold text-ink-900"
       >
-        {group.label}
+        {t(group.key)}
         <ChevronDown
           size={18}
           className={`text-gray-400 transition-transform duration-300 ${open ? 'rotate-180' : ''}`}
@@ -139,8 +143,8 @@ function MobileAccordion({ group, onNavigate }) {
                     }`
                   }
                 >
-                  <span>{item.label}</span>
-                  {item.badge && <Badge>{item.badge}</Badge>}
+                  <span>{t(item.key)}</span>
+                  {item.soon && <Badge>{t('common.soon')}</Badge>}
                 </NavLink>
               ))}
             </div>
@@ -152,6 +156,7 @@ function MobileAccordion({ group, onNavigate }) {
 }
 
 export default function Navbar() {
+  const t = useT();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const { pathname } = useLocation();
@@ -198,16 +203,16 @@ export default function Navbar() {
             VOLA
           </Link>
 
-          <div className="hidden lg:flex items-center gap-8">
+          <div className="hidden xl:flex items-center gap-7">
             {NAV_MENU.map((group) => (
-              <DesktopDropdown key={group.label} group={group} solid={solid} />
+              <DesktopDropdown key={group.key} group={group} solid={solid} />
             ))}
             {NAV_DIRECT.map((item) => (
               <NavLink
                 key={item.path}
                 to={item.path}
                 className={({ isActive }) =>
-                  `flex items-center text-sm transition-colors duration-300 ${
+                  `flex items-center whitespace-nowrap text-sm transition-colors duration-300 ${
                     isActive
                       ? solid
                         ? 'text-ink-900 font-semibold'
@@ -216,36 +221,30 @@ export default function Navbar() {
                   }`
                 }
               >
-                {item.label}
-                {item.badge && <Badge>{item.badge}</Badge>}
+                {t(item.key)}
+                {item.soon && <Badge>{t('common.soon')}</Badge>}
               </NavLink>
             ))}
           </div>
 
-          <div className="hidden lg:flex items-center gap-3">
-            <a
-              href="tel:+595985606780"
-              className={`flex items-center gap-2 text-sm transition-colors duration-300 ${linkIdle}`}
-            >
-              <Phone size={15} />
-              +595 985 606 780
-            </a>
+          <div className="hidden xl:flex items-center gap-3">
+            <LanguageSelector solid={solid} />
             <Link
               to="/contacto"
-              className={`px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 ${
+              className={`whitespace-nowrap rounded-xl px-5 py-2.5 text-sm font-semibold transition-all duration-300 ${
                 solid ? 'text-white bg-ink-900 hover:bg-ink-800' : 'text-ink-900 bg-white hover:bg-white/90'
               }`}
             >
-              Contactar Concierge
+              {t('nav.concierge')}
             </Link>
           </div>
 
           <button
             onClick={() => setOpen(true)}
-            className={`lg:hidden p-2 -mr-2 transition-colors duration-300 ${
+            className={`xl:hidden p-2 -mr-2 transition-colors duration-300 ${
               solid ? 'text-ink-900' : 'text-white'
             }`}
-            aria-label="Abrir menú"
+            aria-label={t('nav.openMenu')}
           >
             <Menu size={22} />
           </button>
@@ -259,7 +258,7 @@ export default function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-[60] lg:hidden bg-white flex flex-col"
+            className="fixed inset-0 z-[60] xl:hidden bg-white flex flex-col"
           >
             <div className="h-16 flex items-center justify-between px-5 border-b border-gray-200 shrink-0">
               <Link
@@ -272,7 +271,7 @@ export default function Navbar() {
               <button
                 onClick={() => setOpen(false)}
                 className="p-2 -mr-2 text-ink-900"
-                aria-label="Cerrar menú"
+                aria-label={t('common.close')}
               >
                 <X size={22} />
               </button>
@@ -280,7 +279,7 @@ export default function Navbar() {
 
             <div className="flex-1 overflow-y-auto px-5 pb-8">
               {NAV_MENU.map((group) => (
-                <MobileAccordion key={group.label} group={group} onNavigate={() => setOpen(false)} />
+                <MobileAccordion key={group.key} group={group} onNavigate={() => setOpen(false)} />
               ))}
 
               {NAV_DIRECT.map((item) => (
@@ -290,19 +289,20 @@ export default function Navbar() {
                   onClick={() => setOpen(false)}
                   className="flex items-center justify-between border-b border-gray-100 py-4 font-display text-lg font-semibold text-ink-900"
                 >
-                  <span>{item.label}</span>
-                  {item.badge && <Badge>{item.badge}</Badge>}
+                  <span>{t(item.key)}</span>
+                  {item.soon && <Badge>{t('common.soon')}</Badge>}
                 </NavLink>
               ))}
 
               <div className="mt-8 space-y-3">
                 <Link to="/contacto" onClick={() => setOpen(false)} className="btn-primary w-full">
-                  Contactar Concierge
+                  {t('nav.concierge')}
                 </Link>
                 <a href="tel:+595985606780" className="btn-outline w-full">
                   <Phone size={15} />
                   +595 985 606 780
                 </a>
+                <LanguageSelector solid block />
               </div>
             </div>
           </motion.div>

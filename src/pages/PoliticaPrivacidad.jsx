@@ -30,25 +30,32 @@ const SECTIONS = [
     ],
   },
   {
-    title: '5. Conservación',
+    title: '5. Contenido embebido de terceros',
+    body: [
+      'La sección de clima aeronáutico incrusta un mapa meteorológico interactivo provisto por Windy (windy.com). Ese contenido se carga directamente desde los servidores de Windy, que pueden registrar tu dirección IP, el tipo de dispositivo y datos técnicos de la visita, y aplicar sus propias cookies.',
+      'VOLA no controla ni recibe esa información. El uso del mapa se rige además por la política de privacidad de Windy. Si preferís evitarlo, podés no ingresar a la sección de clima; el resto del sitio funciona sin cargar contenido de terceros.',
+    ],
+  },
+  {
+    title: '6. Conservación',
     body: [
       'Conservamos los datos de contacto mientras exista una relación comercial vigente o hasta que solicites su eliminación. Los registros de vuelos ejecutados se conservan por el plazo que exige la normativa aeronáutica y tributaria aplicable.',
     ],
   },
   {
-    title: '6. Tus derechos',
+    title: '7. Tus derechos',
     body: [
       'Podés solicitar en cualquier momento el acceso, la rectificación o la eliminación de tus datos personales escribiendo a concierge@vola.com.py. Responderemos dentro de un plazo razonable.',
     ],
   },
   {
-    title: '7. Seguridad',
+    title: '8. Seguridad',
     body: [
       'Aplicamos medidas técnicas y organizativas razonables para proteger los datos. Este sitio se sirve íntegramente sobre HTTPS.',
     ],
   },
   {
-    title: '8. Cambios en esta política',
+    title: '9. Cambios en esta política',
     body: [
       'Podemos actualizar esta política para reflejar cambios en el servicio o en la normativa. La versión vigente es siempre la publicada en esta página.',
     ],

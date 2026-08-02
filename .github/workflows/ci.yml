@@ -1,0 +1,37 @@
+name: CI
+
+# Valida que el proyecto compile antes de mergear.
+# deploy.yml sólo corre con push a main: sin este check, un build roto
+# se mergearía sin aviso y recién fallaría al desplegar, dejando main en
+# rojo y el sitio publicado desactualizado.
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+# Un push nuevo sobre el mismo PR cancela la corrida anterior.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      # `npm ci` respeta package-lock.json, así que el CI compila con las
+      # mismas versiones exactas que el deploy.
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build

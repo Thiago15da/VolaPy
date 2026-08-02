@@ -3,7 +3,7 @@ import Features from '../components/Features';
 import Experiences from '../components/Experiences';
 import Fleet from '../components/Fleet';
 import FleetRadar from '../components/FleetRadar';
-import EmptyLegs from '../components/EmptyLegs';
+import FrequentRoutes from '../components/FrequentRoutes';
 import usePageMeta from '../usePageMeta';
 
 export default function Home() {
@@ -16,10 +16,10 @@ export default function Home() {
     <>
       <Hero />
       <Features />
+      <FrequentRoutes />
       <Experiences />
       <Fleet />
       <FleetRadar />
-      <EmptyLegs />
     </>
   );
 }
