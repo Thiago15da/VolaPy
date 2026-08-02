@@ -1,96 +1,88 @@
 import { motion } from 'framer-motion';
-import { ChevronDown } from 'lucide-react';
 import { HERO_IMAGE } from '../data';
-import FlightQuoter from './FlightQuoter';
 import { stagger, fadeUp } from '../motion';
+import FlightQuoter from './FlightQuoter';
+import TrustBadge from './TrustBadge';
+
+const STATS = [
+  { value: '24/7', label: 'Concierge dedicado' },
+  { value: '8', label: 'Aeropuertos operados' },
+  { value: '<2h', label: 'Tiempo de respuesta' },
+  { value: '100%', label: 'Privacidad garantizada' },
+];
 
 export default function Hero() {
   return (
-    <section
-      id="inicio"
-      className="relative min-h-svh flex flex-col justify-center overflow-hidden pt-[72px]"
-    >
-      {/* Background */}
-      <div className="absolute inset-0 z-0">
+    <section className="relative">
+      {/* Lienzo de la imagen */}
+      <div className="relative flex min-h-[34rem] items-center justify-center overflow-hidden md:min-h-[42rem]">
         <img
           src={HERO_IMAGE}
           alt=""
           aria-hidden="true"
-          className="absolute inset-0 w-full h-full object-cover object-center select-none pointer-events-none"
-          style={{ opacity: 0.28 }}
+          fetchpriority="high"
+          className="absolute inset-0 h-full w-full select-none object-cover object-center"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-cloud-50/40 via-cloud-50/70 to-cloud-50" />
-        <div className="absolute inset-0 bg-gradient-to-r from-cloud-50/80 via-transparent to-transparent" />
+        {/* Capas de contraste: el titular debe leerse sobre cualquier foto */}
+        <div className="absolute inset-0 bg-ink-950/55" />
+        <div className="absolute inset-0 bg-gradient-to-b from-ink-950/70 via-ink-950/25 to-ink-950/80" />
+
+        <div className="shell relative w-full pt-28 pb-44 text-center md:pt-36 md:pb-56">
+          <motion.div variants={stagger} initial="hidden" animate="show" className="mx-auto max-w-4xl">
+            <motion.h1
+              variants={fadeUp}
+              className="h-display text-balance font-display font-extrabold text-white"
+            >
+              La plataforma líder en jets y vuelos privados en Paraguay
+            </motion.h1>
+
+            <motion.p
+              variants={fadeUp}
+              className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-white/70 md:text-lg"
+            >
+              Charter doméstico y helicópteros bajo demanda. Cotizá tu ruta en segundos y
+              coordiná el vuelo con un concierge dedicado.
+            </motion.p>
+
+            <motion.div variants={fadeUp} className="mt-8 flex justify-center">
+              <TrustBadge dark />
+            </motion.div>
+          </motion.div>
+        </div>
       </div>
 
-      {/* Content */}
-      <div className="relative z-10 max-w-container mx-auto px-5 sm:px-8 w-full py-20 md:py-28">
-        <motion.div variants={stagger} initial="hidden" animate="show" className="max-w-3xl">
-          <motion.p
-            variants={fadeUp}
-            className="text-xs font-semibold uppercase tracking-[0.18em] text-gray-400 mb-6"
-          >
-            Aviación privada · Paraguay · vola.com.py
-          </motion.p>
-
-          <motion.h1
-            variants={fadeUp}
-            className="font-display font-extrabold leading-[1.02] tracking-tightest text-ink-900 mb-6"
-            style={{ fontSize: 'clamp(2.6rem, 7.5vw, 5.5rem)' }}
-          >
-            El tiempo es tu activo<br />
-            <span className="text-gray-400">más valioso.</span>
-          </motion.h1>
-
-          <motion.p
-            variants={fadeUp}
-            className="text-base md:text-lg text-gray-500 leading-relaxed mb-10 max-w-xl"
-          >
-            Vuelos charter domésticos y helicópteros de élite disponibles bajo demanda.
-            Diseñamos cada vuelo alrededor de tu agenda — sin escalas, sin esperas.
-          </motion.p>
-
+      {/* Cotizador flotante, superpuesto al borde inferior de la imagen */}
+      <div className="shell relative z-10 -mt-32 md:-mt-40">
+        <motion.div
+          initial={{ opacity: 0, y: 28 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.25, ease: [0.4, 0, 0.2, 1] }}
+          className="mx-auto max-w-4xl"
+        >
           <FlightQuoter />
         </motion.div>
-
-        {/* Stats */}
-        <motion.div
-          variants={stagger}
-          initial="hidden"
-          animate="show"
-          className="flex flex-wrap gap-10 mt-16 pt-10 border-t border-gray-200/70"
-        >
-          {[
-            { value: '24/7', label: 'Concierge dedicado' },
-            { value: '7', label: 'Destinos domésticos' },
-            { value: '<2h', label: 'Tiempo de respuesta' },
-            { value: '100%', label: 'Privacidad garantizada' },
-          ].map((s) => (
-            <motion.div key={s.label} variants={fadeUp}>
-              <p className="font-display font-bold text-2xl text-ink-900">{s.value}</p>
-              <p className="text-xs text-gray-400 mt-0.5">{s.label}</p>
-            </motion.div>
-          ))}
-        </motion.div>
       </div>
 
-      {/* Scroll cue */}
-      <motion.a
-        href="#servicios"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.4, duration: 0.6 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1 text-gray-400 hover:text-ink-900 transition-colors"
-        aria-label="Desplazar abajo"
-      >
-        <span className="text-[0.625rem] tracking-[0.2em] uppercase">Explorar</span>
-        <motion.div
-          animate={{ y: [0, 5, 0] }}
-          transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
+      {/* Franja de indicadores */}
+      <div className="shell mt-14 md:mt-20">
+        <motion.dl
+          variants={stagger}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true }}
+          className="grid grid-cols-2 gap-8 border-t border-gray-200/70 pt-10 md:grid-cols-4"
         >
-          <ChevronDown size={18} />
-        </motion.div>
-      </motion.a>
+          {STATS.map((s) => (
+            <motion.div key={s.label} variants={fadeUp}>
+              <dt className="sr-only">{s.label}</dt>
+              <dd>
+                <p className="font-display text-2xl font-bold text-ink-900">{s.value}</p>
+                <p className="mt-0.5 text-xs text-gray-400">{s.label}</p>
+              </dd>
+            </motion.div>
+          ))}
+        </motion.dl>
+      </div>
     </section>
   );
 }
