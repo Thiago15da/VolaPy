@@ -13,18 +13,23 @@ elemento desde DevTools o leyendo el bundle por URL.
 Por eso, en modo mantenimiento el deploy **no compila ni publica la aplicación**: sube
 únicamente esta página. El contenido no llega al servidor, así que no hay nada que inspeccionar.
 
-## Cómo poner la cortina
+## Cómo poner y sacar la cortina
 
-1. En GitHub: **Settings → Secrets and variables → Actions → Variables**.
-2. Crear (o editar) la variable `MAINTENANCE_MODE` con el valor `true`.
-3. Ir a **Actions → Deploy to GitHub Pages → Run workflow**.
+El interruptor es el archivo **`maintenance/enabled`** de esta carpeta:
 
-## Cómo sacarla
+- `true` → se publica sólo la página de aviso
+- `false` → se publica el sitio completo
 
-1. Cambiar `MAINTENANCE_MODE` a `false`, o borrar la variable.
-2. Volver a correr el workflow igual que arriba.
+Para cambiarlo desde la web de GitHub: abrí `maintenance/enabled`, tocá el lápiz, cambiá la
+palabra y confirmá el commit. El push dispara el deploy automáticamente, así que **no hay que
+hacer nada más**.
 
-> Cambiar la variable por sí sola no republica nada: siempre hay que disparar el deploy.
+Para verificar qué hizo el deploy: **Actions → Deploy to GitHub Pages → última corrida**. El
+paso «Leer el interruptor» dice si la cortina quedó activa o apagada.
+
+> También se puede forzar la cortina con la variable de repositorio `MAINTENANCE_MODE = true`
+> (Settings → Secrets and variables → Actions → Variables), pero en ese caso hay que correr el
+> workflow a mano desde Actions: cambiar una variable no republica nada por sí sola.
 
 Cuando se saca la cortina, Google puede tardar unos días en volver a indexar el sitio real,
 porque esta página lleva `noindex`. Se puede acelerar pidiendo el rastreo desde Search Console.
