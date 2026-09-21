@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VOLA Paraguay</title>
+    <meta name="description" content="VOLA Paraguay — sitio en construcción." />
+    <!-- Que Google no indexe la cortina como si fuera el contenido del sitio -->
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#050F1B" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400&display=swap"
+      rel="stylesheet"
+    />
+
+    <!--
+      Página autocontenida a propósito: no pasa por Vite, no importa nada del
+      proyecto y no necesita JavaScript. Cuando el deploy corre en modo
+      mantenimiento, esto es LO ÚNICO que se publica, así que el contenido del
+      sitio no llega al navegador de nadie.
+    -->
+    <style>
+      :root {
+        --navy: #050f1b;
+        --navy-soft: #0a1a34;
+        --red: #c41425;
+        --white: #ffffff;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+      }
+
+      body {
+        background: var(--navy);
+        color: var(--white);
+        font-family: 'Jost', ui-sans-serif, system-ui, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100svh;
+        padding: 2rem 1.25rem;
+        overflow-x: hidden;
+      }
+
+      /* Halo muy tenue detrás del logotipo, para que el fondo no sea plano */
+      body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background: radial-gradient(
+          ellipse 70% 55% at 50% 38%,
+          rgba(25, 45, 78, 0.55),
+          transparent 70%
+        );
+        pointer-events: none;
+      }
+
+      main {
+        position: relative;
+        text-align: center;
+        max-width: 34rem;
+        width: 100%;
+      }
+
+      /* --- Logotipo: mismo lockup que src/components/Logo.jsx --- */
+      .logo {
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+        line-height: 1;
+      }
+
+      .logo__word {
+        font-size: clamp(2.5rem, 12vw, 4.25rem);
+        font-weight: 300;
+        letter-spacing: 0.32em;
+        /* El tracking deja aire a la derecha; se compensa para centrar ópticamente */
+        margin-right: -0.32em;
+      }
+
+      .logo__sub {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        width: 100%;
+        margin-top: 0.85rem;
+      }
+
+      .logo__rule {
+        flex: 1;
+        height: 1px;
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      .logo__country {
+        font-size: clamp(0.625rem, 2.6vw, 0.75rem);
+        font-weight: 300;
+        text-transform: uppercase;
+        letter-spacing: 0.26em;
+        margin-right: -0.26em;
+        color: rgba(255, 255, 255, 0.6);
+      }
+
+      /* --- Aviso --- */
+      .accent {
+        width: 2.5rem;
+        height: 3px;
+        background: var(--red);
+        border-radius: 2px;
+        margin: 3rem auto 2rem;
+      }
+
+      h1 {
+        font-size: clamp(1.05rem, 4.2vw, 1.4rem);
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        margin: 0 0 1rem;
+        color: var(--white);
+      }
+
+      p {
+        font-size: clamp(0.875rem, 3.4vw, 0.975rem);
+        font-weight: 300;
+        line-height: 1.7;
+        margin: 0;
+        color: rgba(255, 255, 255, 0.55);
+      }
+
+      .footer {
+        margin-top: 4rem;
+        font-size: 0.6875rem;
+        font-weight: 300;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.28);
+      }
+
+      @media (prefers-reduced-motion: no-preference) {
+        main {
+          animation: rise 0.8s cubic-bezier(0.4, 0, 0.2, 1) both;
+        }
+        @keyframes rise {
+          from {
+            opacity: 0;
+            transform: translateY(14px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <main>
+      <span class="logo">
+        <span class="logo__word">VOLA</span>
+        <span class="logo__sub">
+          <span class="logo__rule"></span>
+          <span class="logo__country">Paraguay</span>
+          <span class="logo__rule"></span>
+        </span>
+      </span>
+
+      <div class="accent"></div>
+
+      <h1>Estamos construyendo algo a la altura.</h1>
+      <p>
+        Nuestro sitio se encuentra en desarrollo y volverá a estar disponible próximamente.
+        Gracias por tu paciencia.
+      </p>
+
+      <p class="footer">vola.com.py</p>
+    </main>
+  </body>
+</html>

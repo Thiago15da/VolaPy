@@ -17,22 +17,58 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    # Interruptor de la cortina de "sitio en construcción".
+    # Se define en Settings → Secrets and variables → Actions → Variables.
+    #   MAINTENANCE_MODE = true   → se publica SÓLO la página de aviso
+    #   false, vacía o inexistente → se publica el sitio completo
+    env:
+      MAINTENANCE_MODE: ${{ vars.MAINTENANCE_MODE }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # --- Modo mantenimiento ---------------------------------------------
+      # La aplicación no se compila ni se sube: el bundle nunca llega al
+      # servidor, así que no hay contenido que inspeccionar desde el navegador.
+      - name: Publicar sólo la cortina
+        if: env.MAINTENANCE_MODE == 'true'
+        run: |
+          set -euo pipefail
+          rm -rf dist
+          mkdir -p dist
+          cp maintenance/index.html dist/index.html
+          # Misma página como 404 para que cualquier ruta (/taxi-aereo, /comunidad…)
+          # muestre el aviso en vez del 404 de GitHub. Sin el script de fallback
+          # SPA: acá la página tiene que mostrarse, no redirigir.
+          cp maintenance/index.html dist/404.html
+          # Sin CNAME el dominio propio se cae y Pages vuelve a servir en /VolaPy/
+          cp public/CNAME dist/CNAME
+          echo "Cortina activa. Contenido de dist/:"
+          ls -la dist
+          if [ -d dist/assets ] || ls dist/*.js >/dev/null 2>&1; then
+            echo "::error::Se coló un bundle en dist/: la cortina no estaría bloqueando nada."
+            exit 1
+          fi
+
+      # --- Modo normal -----------------------------------------------------
       - name: Setup Node
+        if: env.MAINTENANCE_MODE != 'true'
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
 
       - name: Install dependencies
-        run: npm install
+        if: env.MAINTENANCE_MODE != 'true'
+        run: npm ci
 
       - name: Build
+        if: env.MAINTENANCE_MODE != 'true'
         run: npm run build
 
+      # --- Publicación (común a ambos caminos) -----------------------------
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
