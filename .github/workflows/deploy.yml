@@ -18,22 +18,38 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    # Interruptor de la cortina de "sitio en construcción".
-    # Se define en Settings → Secrets and variables → Actions → Variables.
-    #   MAINTENANCE_MODE = true   → se publica SÓLO la página de aviso
-    #   false, vacía o inexistente → se publica el sitio completo
-    env:
-      MAINTENANCE_MODE: ${{ vars.MAINTENANCE_MODE }}
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      # Interruptor de la cortina de "sitio en construcción".
+      #
+      # Fuente principal: el archivo maintenance/enabled (true / false).
+      # Se edita desde la web de GitHub y el push dispara el deploy solo.
+      #
+      # La variable de repositorio MAINTENANCE_MODE (Settings → Secrets and
+      # variables → Actions → Variables) también puede forzarla, por si se
+      # prefiere ese camino.
+      - name: Leer el interruptor
+        id: flag
+        env:
+          VAR_MODE: ${{ vars.MAINTENANCE_MODE }}
+        run: |
+          set -euo pipefail
+          MODE="$(tr -d '[:space:]' < maintenance/enabled 2>/dev/null || echo false)"
+          if [ "${VAR_MODE:-}" = "true" ]; then MODE=true; fi
+          echo "mode=$MODE" >> "$GITHUB_OUTPUT"
+          if [ "$MODE" = "true" ]; then
+            echo "::notice::Cortina ACTIVA — se publica sólo la página de aviso."
+          else
+            echo "::notice::Cortina apagada — se publica el sitio completo."
+          fi
 
       # --- Modo mantenimiento ---------------------------------------------
       # La aplicación no se compila ni se sube: el bundle nunca llega al
       # servidor, así que no hay contenido que inspeccionar desde el navegador.
       - name: Publicar sólo la cortina
-        if: env.MAINTENANCE_MODE == 'true'
+        if: steps.flag.outputs.mode == 'true'
         run: |
           set -euo pipefail
           rm -rf dist
@@ -45,7 +61,7 @@ jobs:
           cp maintenance/index.html dist/404.html
           # Sin CNAME el dominio propio se cae y Pages vuelve a servir en /VolaPy/
           cp public/CNAME dist/CNAME
-          echo "Cortina activa. Contenido de dist/:"
+          echo "Contenido de dist/:"
           ls -la dist
           if [ -d dist/assets ] || ls dist/*.js >/dev/null 2>&1; then
             echo "::error::Se coló un bundle en dist/: la cortina no estaría bloqueando nada."
@@ -54,18 +70,18 @@ jobs:
 
       # --- Modo normal -----------------------------------------------------
       - name: Setup Node
-        if: env.MAINTENANCE_MODE != 'true'
+        if: steps.flag.outputs.mode != 'true'
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
 
       - name: Install dependencies
-        if: env.MAINTENANCE_MODE != 'true'
+        if: steps.flag.outputs.mode != 'true'
         run: npm ci
 
       - name: Build
-        if: env.MAINTENANCE_MODE != 'true'
+        if: steps.flag.outputs.mode != 'true'
         run: npm run build
 
       # --- Publicación (común a ambos caminos) -----------------------------
